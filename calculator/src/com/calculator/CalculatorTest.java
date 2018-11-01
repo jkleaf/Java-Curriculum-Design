@@ -13,7 +13,6 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import java.awt.Color;
 
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.GridLayout;
@@ -25,11 +24,14 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+
 import javax.swing.JLabel;
 import java.awt.SystemColor;
 
 public class CalculatorTest extends JFrame {
 
+	private static final long serialVersionUID = 1L;
 	private DetailedResults dResults=new DetailedResults();
 	private JPanel contentPane;
 	private JTextField textField;
@@ -39,6 +41,7 @@ public class CalculatorTest extends JFrame {
 	static Point p=new Point();
 	private JLabel lblNewLabel;
 	private JButton button_1;
+	private ArrayList<JButton> buttons=new ArrayList<>();
 	private Image closeImg=ImgUtil.getImage("images/close.png");
 	private Image backspaceImg=ImgUtil.getImage("images/backspace.png");
 	private boolean pointButtonClickable=true;
@@ -62,7 +65,7 @@ public class CalculatorTest extends JFrame {
 		});
 	}
 	
-	public void initLisenter(){
+	private void initLisenter(){
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -136,6 +139,7 @@ public class CalculatorTest extends JFrame {
         
 		for(int i=0;i<name.length;i++){
 			JButton button=new JButton(name[i]);
+			buttons.add(button);
 			if(!name[i].equals("MOD"))
 				button.setFont(new Font("", Font.BOLD, 40));
 			else
@@ -173,7 +177,16 @@ public class CalculatorTest extends JFrame {
 		g.drawImage(closeImg,410,3,30,30,null);
 	}
 	
-	public void addBackSpaceListener(JButton button) {
+	private void setCalcuEnable(boolean enable){
+		for (JButton jButton : buttons) {
+			String txt=jButton.getText();
+			if(!txt.equals("C")){
+				jButton.setEnabled(enable);
+			}
+		}
+	}
+	
+	private void addBackSpaceListener(JButton button) {
 		button.addActionListener(new ActionListener() {			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -185,15 +198,17 @@ public class CalculatorTest extends JFrame {
 						textField.setText(txt);
 						if(txt.length()==0){
 							textField.setText("0");
-//							factorialExists=true;
 						}
+					hasFact=false;//
+					factorialExists=false;//
+					pointButtonClickable=true;
 					}
 				}	
 			}
 		});
 	}
 	
-	public void addNumButtonListener(JButton button){
+	private void addNumButtonListener(JButton button){
 		button.addActionListener(new ActionListener() {		
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -229,7 +244,7 @@ public class CalculatorTest extends JFrame {
 		});
 	}
 	
-	public void addAppendPointListener(JButton button){
+	private void addAppendPointListener(JButton button){
 		button.addActionListener(new ActionListener() {			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -241,7 +256,7 @@ public class CalculatorTest extends JFrame {
 		});
 	}
 	
-	public void clear(){
+	private void clear(){
 		textField.setText("0");
 		pointButtonClickable=true;
 		factorialExists=false;
@@ -251,9 +266,10 @@ public class CalculatorTest extends JFrame {
 		firstCalculate=true;
 		preNum=BigDecimal.ZERO;
 		onlyEquals=false;
+		setCalcuEnable(true);
 	}
 	
-	public void addClearButtonListener(JButton button){
+	private void addClearButtonListener(JButton button){
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -262,7 +278,7 @@ public class CalculatorTest extends JFrame {
 		});
 	}
 	
-	public void addCalcuButtonListener(JButton button){
+	private void addCalcuButtonListener(JButton button){
 		button.addActionListener(new ActionListener() {			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -312,106 +328,108 @@ public class CalculatorTest extends JFrame {
 		});
 	}
 
-	public void initPreNum(){
+	private void initPreNum(){
 		preNum=BigDecimal.ZERO;
 		pointButtonClickable=true;
 	}
 	
-	public void checkFirstCalculate(){
+	private void checkFirstCalculate(){
 		if(firstCalculate){
 			preNum=new BigDecimal(textField.getText());
 			firstCalculate=false;
 		}
 	}
 	
-	public void selectButton(){
+	private void selectButton(){
 		checkFirstCalculate();
 		execute=true;
 		pointButtonClickable=true;
 	}
 	
-	public void checkResLength(String res){
+	private void checkResLength(String res){
 		if(res.length()>11)
 			dResults.setVisible(true);
 	}
 	
-	public String getResults(BigDecimal number){
+	private String getResults(BigDecimal number){
 		String res=number.toPlainString();
 		textField.setText(res);
 		checkResLength(res);
 		return res;
 	}
 	
-	public void outputResults(JButton button){
+	private void outputResults(JButton button){
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-					finalResults=textField.getText();
-					if(hasFact){
-						preNum=operateFactorial();
-						if(preNum==null){
-							finalResults="阶乘运算数据过大，输入应不大于10000";
-							dResults.setVisible(true);
-						}else if(preNum.toString().equals("-1")){
-							finalResults="阶乘运算不能有负数，请重新输入";
-							dResults.setVisible(true);		
-						}
-						else{
-							finalResults=getResults(preNum);
-						}
-						isFacted=true;
-						factorialExists=false;//
-						pointButtonClickable=true;
+				finalResults=textField.getText();
+				if(hasFact){
+					preNum=operateFactorial();
+					if(preNum==null){
+						finalResults="阶乘运算数据过大，输入应不大于10000";
+						setCalcuEnable(false);
+						dResults.setVisible(true);
+					}else if(preNum.toString().equals("-1")){
+						finalResults="阶乘运算不能有负数";
+						setCalcuEnable(false);
+						dResults.setVisible(true);		
 					}else{
-						if(has==0&&prestatus!=0){
-							has=prestatus;
-							onlyEquals=true;
-						}
-						if(has==5){
-							preNum=operateMod();
-							preSecondNum=secondNum;
-							finalResults=getResults(preNum);
-							has=0;
-						}
-						else if(has==4){
-							preNum=operateDivide();
-							if(preNum!=null){
-								preSecondNum=secondNum;
-								finalResults=getResults(preNum);
-								has=0;
-							}else{
-								finalResults="算术错误，除数应不为0";
-								dResults.setVisible(true);
-							}
-						}else if(has==3){
-							preNum=operateMutiply();
-							preSecondNum=secondNum;
-							finalResults=getResults(preNum);
-							has=0;
-						}else if(has==2){
-							preNum=operateSubtract();
-							preSecondNum=secondNum;
-							finalResults=getResults(preNum);
-							has=0;
-						}else if(has==1){
-							preNum=operateAdd();
-							preSecondNum=secondNum;
-							finalResults=getResults(preNum);
-							has=0;
-						}
-						isCalculated=true;
+						finalResults=getResults(preNum);
 					}
-					dResults.setTextAreaContent(finalResults);
+					isFacted=true;
+					factorialExists=false;//
+					pointButtonClickable=true;
+				}else{
+					if(has==0&&prestatus!=0){
+						has=prestatus;
+						onlyEquals=true;
+					}
+					if(has==5){
+						preNum=operateMod();
+						preSecondNum=secondNum;
+						finalResults=getResults(preNum);
+						has=0;
+					}
+					else if(has==4){
+						preNum=operateDivide();
+						if(preNum!=null){
+							preSecondNum=secondNum;
+							finalResults=getResults(preNum);
+							has=0;
+						}else{
+							finalResults="算术错误，除数应不为0";
+							setCalcuEnable(false);
+							dResults.setVisible(true);
+						}
+					}else if(has==3){
+						preNum=operateMutiply();
+						preSecondNum=secondNum;
+						finalResults=getResults(preNum);
+						has=0;
+					}else if(has==2){
+						preNum=operateSubtract();
+						preSecondNum=secondNum;
+						finalResults=getResults(preNum);
+						has=0;
+					}else if(has==1){
+						preNum=operateAdd();
+						preSecondNum=secondNum;
+						finalResults=getResults(preNum);
+						has=0;
+					}
+					isCalculated=true;
+				}
+				dResults.setTextAreaContent(finalResults);
 			}
 		});
 	}
 
-	public BigDecimal operateFactorial(){
+	private BigDecimal operateFactorial(){
 		BigDecimal res = null;
 		String txt=textField.getText();
-		if(txt.length()>1)
+		if(txt.contains("!"))
 			num=new BigDecimal(txt.substring(0, textField.getText().length()-1));
-		else num=new BigDecimal(txt);
+		else return new BigDecimal(txt);
 		if(num.toString().equals("0"))
 			return BigDecimal.ONE;
 		if(num.compareTo(BigDecimal.valueOf(10000))==1)
@@ -426,33 +444,29 @@ public class CalculatorTest extends JFrame {
 		return res;
 	}
 	
-	public BigDecimal operateMod(){
+	private BigDecimal operateMod(){
 		secondNum=onlyEquals?preSecondNum:new BigDecimal(textField.getText());
 		return preNum.remainder(secondNum).stripTrailingZeros();
 	}
 	
-	public String operateRoot(){
-		return null;	
-	}
-	
-	public BigDecimal operateDivide(){
+	private BigDecimal operateDivide(){
 		String res=textField.getText();
 		if(res.equals("0")) return null;
 		secondNum=onlyEquals?preSecondNum:new BigDecimal(res);
 		return preNum.divide(secondNum,50,BigDecimal.ROUND_HALF_DOWN).stripTrailingZeros();
 	}
 	
-	public BigDecimal operateMutiply(){
+	private BigDecimal operateMutiply(){
 		secondNum=onlyEquals?preSecondNum:new BigDecimal(textField.getText());
 		return preNum.multiply(secondNum).stripTrailingZeros();
 	}
 	
-	public BigDecimal operateSubtract(){
+	private BigDecimal operateSubtract(){
 		secondNum=onlyEquals?preSecondNum:new BigDecimal(textField.getText());
 		return preNum.subtract(secondNum).stripTrailingZeros();
 	}
 	
-	public BigDecimal operateAdd(){
+	private BigDecimal operateAdd(){
 		secondNum=onlyEquals?preSecondNum:new BigDecimal(textField.getText());
 		return preNum.add(secondNum).stripTrailingZeros();
 	}
