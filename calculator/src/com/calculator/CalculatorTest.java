@@ -25,6 +25,8 @@ import java.awt.event.MouseMotionAdapter;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.SystemColor;
 
 public class CalculatorTest extends JFrame {
@@ -48,7 +50,7 @@ public class CalculatorTest extends JFrame {
 	private int has,prestatus;
 	private BigDecimal num=BigDecimal.ZERO,preNum=BigDecimal.ZERO,
 			secondNum=BigDecimal.ZERO,preSecondNum=BigDecimal.ZERO;
-	private boolean execute,firstCalculate=true,onlyEquals;
+	private boolean execute,firstCalculate=true,onlyEquals,equalsClicked,isDisplayed;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -131,13 +133,42 @@ public class CalculatorTest extends JFrame {
 		button_1.setToolTipText("显示详细结果");
 		panel.add(button_1, BorderLayout.SOUTH);
 		panel_1 = new JPanel();
-		panel_1.setLayout(new GridLayout(5, 4, 0, 0));
+		panel_1.setLayout(new GridLayout(5, 4, 2, 2));
 		backspaceImg=backspaceImg.getScaledInstance(40, 30, Image.SCALE_DEFAULT);
 		
         initLisenter();
         
 		for(int i=0;i<name.length;i++){
 			JButton button=new JButton(name[i]);
+			if(name[i].equals("+")||name[i].equals("-")||name[i].equals("×")
+					||name[i].equals("÷")||name[i].equals("=")){
+				button.addMouseListener(new MouseAdapter() {
+					public void mouseEntered(MouseEvent e) {
+						button.setBackground(new Color(99,184,255));
+					};
+					public void mouseExited(MouseEvent e) {
+						button.setBackground(new Color(211, 211, 211));
+					};
+				});
+			}else if(!name[i].equals("")&&Character.isDigit(name[i].charAt(0))){
+				button.addMouseListener(new MouseAdapter() {
+					public void mouseEntered(MouseEvent e) {
+						button.setBackground(Color.LIGHT_GRAY);
+					}
+					public void mouseExited(MouseEvent e) {
+							button.setBackground(Color.WHITE);
+					}
+				});
+			}else{
+				button.addMouseListener(new MouseAdapter() {
+					public void mouseEntered(MouseEvent e) {
+						button.setBackground(Color.GRAY);
+					}
+					public void mouseExited(MouseEvent e) {
+						button.setBackground(new Color(211, 211, 211));
+					}
+				});
+			}
 			buttons.add(button);
 			if(!name[i].equals("MOD"))
 				button.setFont(new Font("", Font.BOLD, 40));
@@ -150,8 +181,10 @@ public class CalculatorTest extends JFrame {
 				}else if(name[i].equals("C")){
 					addClearButtonListener(button);
 				}else if(name[i].equals("=")){
-					outputResults(button);
+					addEqualsButtonListener(button);
 				}else{
+					if(name[i].equals("n!"))
+						button.setToolTipText("整数阶乘");
 					addCalcuButtonListener(button);
 				}
 			}else if(name[i].equals("")){
@@ -159,7 +192,7 @@ public class CalculatorTest extends JFrame {
 				button.setIcon(new ImageIcon(backspaceImg));
 				addBackSpaceListener(button);
 			}else{
-				button.setFont(new Font("One Stroke Script LET", Font.BOLD, 40));
+				button.setFont(new Font("MS Reference Sans Serif", Font.BOLD, 40));
 				button.setBackground(Color.WHITE);
 				addNumButtonListener(button);
 			}
@@ -231,6 +264,7 @@ public class CalculatorTest extends JFrame {
 						isCalculated=false;
 					}
 					textField.setText(textField.getText()+e.getActionCommand());
+					isDisplayed=true;
 				}
 				if(isFacted){
 					textField.setText(e.getActionCommand());
@@ -263,9 +297,14 @@ public class CalculatorTest extends JFrame {
 		hasFact=false;
 		isCalculated=false;
 		has=0;//
+		prestatus=0;
 		firstCalculate=true;
 		preNum=BigDecimal.ZERO;
+		secondNum=BigDecimal.ZERO;
+		preSecondNum=BigDecimal.ZERO;
 		onlyEquals=false;
+		equalsClicked=false;
+		isDisplayed=false;
 		setCalcuEnable(true);
 	}
 	
@@ -276,6 +315,19 @@ public class CalculatorTest extends JFrame {
 				clear();
 			}
 		});
+	}
+	
+	private void checkEqualsClicked(){
+		if(isDisplayed&&!equalsClicked)
+			outputResults();
+		equalsClicked=false;
+		isDisplayed=false;
+	}
+	
+	private void checkAndSelect(){
+		checkEqualsClicked();
+		selectButton();
+		onlyEquals=false;
 	}
 	
 	private void addCalcuButtonListener(JButton button){
@@ -293,34 +345,24 @@ public class CalculatorTest extends JFrame {
 						}
 						break;
 					case "MOD":
-						selectButton();
-						has=5;
-						prestatus=has;
-						onlyEquals=false;
+						checkAndSelect();
+						prestatus=has=5;						
 						break;
 					case "÷":
-						selectButton();
-						has=4;
-						prestatus=has;
-						onlyEquals=false;
+						checkAndSelect();
+						prestatus=has=4;
 						break;
 					case "×":
-						selectButton();
-						has=3;
-						prestatus=has;
-						onlyEquals=false;
+						checkAndSelect();
+						prestatus=has=3;
 						break;
 					case "-":
-						selectButton();
-						has=2;
-						prestatus=has;
-						onlyEquals=false;
+						checkAndSelect();
+						prestatus=has=2;
 						break;
 					case "+":
-						selectButton();
-						has=1;
-						prestatus=has;
-						onlyEquals=false;
+						checkAndSelect();
+						prestatus=has=1;
 						break;
 				}
 				}
@@ -358,68 +400,73 @@ public class CalculatorTest extends JFrame {
 		return res;
 	}
 	
-	private void outputResults(JButton button){
+	private void outputResults(){
+		finalResults=textField.getText();
+		if(hasFact){
+			preNum=operateFactorial();
+			if(preNum==null){
+				JOptionPane.showMessageDialog
+				(null, "阶乘运算数据过大，输入应不大于10000", "警告", JOptionPane.WARNING_MESSAGE);		
+				setCalcuEnable(false);
+			}else if(preNum.toString().equals("-1")){
+				JOptionPane.showMessageDialog
+				(null, "阶乘运算不能有负数", "错误", JOptionPane.ERROR_MESSAGE);
+				setCalcuEnable(false);
+			}else{
+				finalResults=getResults(preNum);
+			}
+			isFacted=true;
+			factorialExists=false;//
+			pointButtonClickable=true;
+		}else{
+			if(has==0&&prestatus!=0){
+				has=prestatus;
+				onlyEquals=true;
+			}
+			if(has==5){
+				preNum=operateMod();
+				preSecondNum=secondNum;
+				finalResults=getResults(preNum);
+				has=0;
+			}
+			else if(has==4){
+				preNum=operateDivide();
+				if(preNum!=null){
+					preSecondNum=secondNum;
+					finalResults=getResults(preNum);
+					has=0;
+				}else{
+					JOptionPane.showMessageDialog
+					(null, "算术错误，除数应不为0", "错误", JOptionPane.ERROR_MESSAGE);
+					setCalcuEnable(false);
+				}
+			}else if(has==3){
+				preNum=operateMutiply();
+				preSecondNum=secondNum;
+				finalResults=getResults(preNum);
+				has=0;
+			}else if(has==2){
+				preNum=operateSubtract();
+				preSecondNum=secondNum;
+				finalResults=getResults(preNum);
+				has=0;
+			}else if(has==1){
+				preNum=operateAdd();
+				preSecondNum=secondNum;
+				finalResults=getResults(preNum);
+				has=0;
+			}
+			isCalculated=true;
+		}
+		dResults.setTextAreaContent(finalResults);
+	}
+	
+	private void addEqualsButtonListener(JButton button){
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				finalResults=textField.getText();
-				if(hasFact){
-					preNum=operateFactorial();
-					if(preNum==null){
-						finalResults="阶乘运算数据过大，输入应不大于10000";
-						setCalcuEnable(false);
-						dResults.setVisible(true);
-					}else if(preNum.toString().equals("-1")){
-						finalResults="阶乘运算不能有负数";
-						setCalcuEnable(false);
-						dResults.setVisible(true);		
-					}else{
-						finalResults=getResults(preNum);
-					}
-					isFacted=true;
-					factorialExists=false;//
-					pointButtonClickable=true;
-				}else{
-					if(has==0&&prestatus!=0){
-						has=prestatus;
-						onlyEquals=true;
-					}
-					if(has==5){
-						preNum=operateMod();
-						preSecondNum=secondNum;
-						finalResults=getResults(preNum);
-						has=0;
-					}
-					else if(has==4){
-						preNum=operateDivide();
-						if(preNum!=null){
-							preSecondNum=secondNum;
-							finalResults=getResults(preNum);
-							has=0;
-						}else{
-							finalResults="算术错误，除数应不为0";
-							setCalcuEnable(false);
-							dResults.setVisible(true);
-						}
-					}else if(has==3){
-						preNum=operateMutiply();
-						preSecondNum=secondNum;
-						finalResults=getResults(preNum);
-						has=0;
-					}else if(has==2){
-						preNum=operateSubtract();
-						preSecondNum=secondNum;
-						finalResults=getResults(preNum);
-						has=0;
-					}else if(has==1){
-						preNum=operateAdd();
-						preSecondNum=secondNum;
-						finalResults=getResults(preNum);
-						has=0;
-					}
-					isCalculated=true;
-				}
-				dResults.setTextAreaContent(finalResults);
+				outputResults();
+				equalsClicked=true;
 			}
 		});
 	}

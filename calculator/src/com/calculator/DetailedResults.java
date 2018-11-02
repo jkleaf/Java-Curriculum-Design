@@ -20,6 +20,7 @@ public class DetailedResults extends JDialog {
 	private Image blankIcon=ImgUtil.getImage("images/blank.png");
 	
 	public DetailedResults() {
+		setIconImage(blankIcon);
 		setBounds(1100, 400,600, 450);
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		
@@ -37,7 +38,6 @@ public class DetailedResults extends JDialog {
 		getContentPane().add(scrollPane);
 		
 		setTitle("Detailed Results");
-		setIconImage(blankIcon);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setVisible(false);
 	}
