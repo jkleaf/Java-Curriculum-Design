@@ -15,6 +15,7 @@ import java.awt.SystemColor;
 
 public class DetailedResults extends JDialog {
 
+	private static final long serialVersionUID = 1L;
 	public static JTextArea textArea;
 	private Image blankIcon=ImgUtil.getImage("images/blank.png");
 	

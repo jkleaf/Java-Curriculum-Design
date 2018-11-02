@@ -12,7 +12,6 @@ import com.tool.ImgUtil;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import java.awt.Color;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.GridLayout;
@@ -25,7 +24,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-
 import javax.swing.JLabel;
 import java.awt.SystemColor;
 
@@ -117,7 +115,7 @@ public class CalculatorTest extends JFrame {
 		textField.setToolTipText("\u53EF\u8BA1\u7B97\u5927\u6570");
 		textField.setForeground(Color.DARK_GRAY);
 		textField.setText("0");
-		textField.setFont(new Font(null, Font.BOLD, 70));
+		textField.setFont(new Font("Tahoma", Font.BOLD, 70));
 		textField.setHorizontalAlignment(SwingConstants.RIGHT);
 		textField.setEditable(false);
 		panel.add(textField);
@@ -130,6 +128,7 @@ public class CalculatorTest extends JFrame {
 		button_1 = new JButton("D e t a i l e d        R e s u l t s");
 		button_1.setFont(new Font("One Stroke Script LET", Font.PLAIN, 18));
 		button_1.setBackground(SystemColor.menu);
+		button_1.setToolTipText("ÏÔÊ¾ÏêÏ¸½á¹û");
 		panel.add(button_1, BorderLayout.SOUTH);
 		panel_1 = new JPanel();
 		panel_1.setLayout(new GridLayout(5, 4, 0, 0));
@@ -209,7 +208,7 @@ public class CalculatorTest extends JFrame {
 	}
 	
 	private void addNumButtonListener(JButton button){
-		button.addActionListener(new ActionListener() {		
+		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(!factorialExists){
@@ -262,6 +261,7 @@ public class CalculatorTest extends JFrame {
 		factorialExists=false;
 		isFacted=false;
 		hasFact=false;
+		isCalculated=false;
 		has=0;//
 		firstCalculate=true;
 		preNum=BigDecimal.ZERO;
@@ -427,15 +427,19 @@ public class CalculatorTest extends JFrame {
 	private BigDecimal operateFactorial(){
 		BigDecimal res = null;
 		String txt=textField.getText();
-		if(txt.contains("!"))
+		if(txt.contains("!")){
 			num=new BigDecimal(txt.substring(0, textField.getText().length()-1));
-		else return new BigDecimal(txt);
+			if(num.toString().indexOf("-")==0)
+				return BigDecimal.valueOf(-1);
+		}
+		else{
+			secondNum=onlyEquals?preSecondNum:new BigDecimal(txt);
+			return secondNum;
+		}
 		if(num.toString().equals("0"))
 			return BigDecimal.ONE;
 		if(num.compareTo(BigDecimal.valueOf(10000))==1)
 			return null;
-		if(num.toString().indexOf(0)=='-')
-			return BigDecimal.valueOf(-1);
 		long numTmp=num.longValue();
 		res=num;
 		for(long i=1;i<numTmp;i++){
