@@ -12,6 +12,8 @@ import com.tool.ImgUtil;
 
 import javax.swing.JScrollPane;
 import java.awt.SystemColor;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class DetailedResults extends JDialog {
 
@@ -37,6 +39,12 @@ public class DetailedResults extends JDialog {
 		JScrollPane scrollPane=new JScrollPane(textArea);
 		getContentPane().add(scrollPane);
 		
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				CalculatorTest.button_1Cilicked=false;
+			}
+		});
 		setTitle("Detailed Results");
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setVisible(false);

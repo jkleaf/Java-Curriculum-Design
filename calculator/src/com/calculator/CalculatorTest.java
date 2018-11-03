@@ -44,6 +44,7 @@ public class CalculatorTest extends JFrame {
 	private ArrayList<JButton> buttons=new ArrayList<>();
 	private Image closeImg=ImgUtil.getImage("images/close.png");
 	private Image backspaceImg=ImgUtil.getImage("images/backspace.png");
+	public static boolean button_1Cilicked;
 	private boolean pointButtonClickable=true;
 	private boolean factorialExists;
 	private boolean isFacted,isCalculated,hasFact;
@@ -92,7 +93,13 @@ public class CalculatorTest extends JFrame {
 		button_1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				dResults.setVisible(true);
+				if(!button_1Cilicked){
+					dResults.setVisible(true);
+					button_1Cilicked=true;
+				}else{
+					dResults.setVisible(false);
+					button_1Cilicked=false;
+				}
 			}
 		});
 	}
@@ -389,8 +396,10 @@ public class CalculatorTest extends JFrame {
 	}
 	
 	private void checkResLength(String res){
-		if(res.length()>11)
+		if(res.length()>11){
 			dResults.setVisible(true);
+			button_1Cilicked=true;
+		}
 	}
 	
 	private String getResults(BigDecimal number){
@@ -406,7 +415,7 @@ public class CalculatorTest extends JFrame {
 			preNum=operateFactorial();
 			if(preNum==null){
 				JOptionPane.showMessageDialog
-				(null, "阶乘运算数据过大，输入应不大于10000", "警告", JOptionPane.WARNING_MESSAGE);		
+				(null, "阶乘运算数据过大，输入应不大于20000", "警告", JOptionPane.WARNING_MESSAGE);		
 				setCalcuEnable(false);
 			}else if(preNum.toString().equals("-1")){
 				JOptionPane.showMessageDialog
@@ -485,7 +494,7 @@ public class CalculatorTest extends JFrame {
 		}
 		if(num.toString().equals("0"))
 			return BigDecimal.ONE;
-		if(num.compareTo(BigDecimal.valueOf(10000))==1)
+		if(num.compareTo(BigDecimal.valueOf(20000))==1)
 			return null;
 		long numTmp=num.longValue();
 		res=num;
