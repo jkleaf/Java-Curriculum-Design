@@ -8,7 +8,7 @@ public class Main {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					GameFrame frame = new GameFrame();
+					GameFrame frame = GameFrame.getFrame();//new GameFrame();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

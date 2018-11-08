@@ -1,10 +1,16 @@
 package org.gui;
 
+import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -16,8 +22,17 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import org.game.GameFrame;
+import org.tools.ImgUtil;
+
 
 public class ContentPanel extends JPanel {
+	
+	public static final int PANEL_HGAP=80;
+	public static final int PANEL_VGAP=120;	
+	private static Image bgImg=ImgUtil.getImage("bg.png");
+	public static boolean isStarted;//isPainted;
+	private static final String[] items=new String[]{"玩家","电脑"}; 
 	
 	public ContentPanel() {
 		this.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -29,10 +44,22 @@ public class ContentPanel extends JPanel {
 		panel1_1.setLayout(new FlowLayout(FlowLayout.LEFT));
 		panel.add(panel1_1, BorderLayout.CENTER);
 		
-		JButton button1 = new JButton("\u5F00\u59CB\u6E38\u620F");
+		final JButton button1 = new JButton("\u5F00\u59CB\u6E38\u620F");
 		button1.setFont(new Font("华文新魏", Font.PLAIN, 30));
 		button1.setPreferredSize(new Dimension(200, 50));
 		button1.setBackground(new Color(211, 211, 211));
+		button1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(e.getActionCommand().equals("开始游戏")){
+					isStarted=true;
+					button1.setText("结束游戏");
+				}else{
+					button1.setText("开始游戏");
+					GameFrame.getFrame().initChessBoard();
+					isStarted=false;
+				}
+			}
+		});
 		addButtonEnteredListener(button1, new Color(0 ,191 ,255), new Color(211, 211, 211));
 		panel1_1.add(button1);
 		JButton button2 = new JButton("\u6094\u68CB");
@@ -70,8 +97,9 @@ public class ContentPanel extends JPanel {
 		panel3_1.add(panel3_1_1);
 		panel3_1_1.setLayout(new BorderLayout(0, 0));
 		
-		JComboBox comboBox = new JComboBox();
-		
+		JComboBox<String> comboBox = new JComboBox();
+		comboBox.addItem(items[0]);
+		comboBox.addItem(items[1]);
 		panel3_1_1.add(comboBox, BorderLayout.NORTH);
 		panel3_1.add(Box.createVerticalStrut(100));
 		JPanel panel3_1_2=new JPanel();
@@ -81,8 +109,29 @@ public class ContentPanel extends JPanel {
 		panel3_1.add(panel3_1_2);
 		panel3_1_2.setLayout(new BorderLayout(0, 0));
 		panel3_1_2.setBackground(new Color(211, 211, 211));
-		JComboBox comboBox_1 = new JComboBox();
+		JComboBox<String> comboBox_1 = new JComboBox();
+		comboBox_1.addItem(items[1]);
+		comboBox_1.addItem(items[0]);
 		panel3_1_2.add(comboBox_1, BorderLayout.NORTH);
+	}
+	
+	@Override
+	public void paint(Graphics g) {
+		super.paint(g);
+		System.err.println("paint");
+		g.drawImage(bgImg,8,68,714,690,null);
+		g.setColor(Color.BLACK);
+		Graphics2D g2=(Graphics2D)g;
+		g2.setStroke(new BasicStroke(2.0f));
+		for(int i=PANEL_VGAP;i<=PANEL_VGAP+40*14;i+=40)
+			g2.drawLine(PANEL_HGAP, i, PANEL_HGAP+40*14, i);
+		for(int i=PANEL_HGAP;i<=PANEL_HGAP+40*14;i+=40)
+			g2.drawLine(i, PANEL_VGAP, i, PANEL_VGAP+40*14);
+		g.fillOval(PANEL_HGAP+40*3-6, PANEL_VGAP+40*3-6, 12, 12);
+		g.fillOval(PANEL_HGAP+40*11-6, PANEL_VGAP+40*3-6, 12, 12);
+		g.fillOval(PANEL_HGAP+40*3-6, PANEL_VGAP+40*11-6, 12, 12);
+		g.fillOval(PANEL_HGAP+40*11-6, PANEL_VGAP+40*11-6, 12, 12);
+		g.fillOval(PANEL_HGAP+40*7-6, PANEL_VGAP+40*7-6, 12, 12);
 	}
 	
 	public void addButtonEnteredListener(final JButton button,final Color c1,final Color c2){
@@ -97,4 +146,5 @@ public class ContentPanel extends JPanel {
 			}
 		});
 	}
+	
 }

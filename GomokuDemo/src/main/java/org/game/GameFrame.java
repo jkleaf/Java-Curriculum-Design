@@ -5,6 +5,7 @@ import java.awt.Color;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import org.gui.ContentPanel;
 import org.tools.ImgUtil;
@@ -21,16 +22,20 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 
+@SuppressWarnings("serial")
 public class GameFrame extends JFrame {
+	private static GameFrame frame;
 	private static ContentPanel contentPanel=new ContentPanel();
-	private static final int BOARD_HGAP=85;
-	private static final int BOARD_VGAP=155;
-	private static final int TABLE_WIDTH=900;
-	private static final int TABLE_HEIGHT=800;
-	private static final int PANEL_HGAP=80;
-	private static final int PANEL_VGAP=120;	
+	public static final int BOARD_HGAP=85;
+	public static final int BOARD_VGAP=155;
+	public static final int TABLE_WIDTH=900;
+	public static final int TABLE_HEIGHT=800;
+	public static final int PANEL_HGAP=80;
+	public static final int PANEL_VGAP=120;	
 	private static Image bgImg=ImgUtil.getImage("bg.png");
+	private ArrayList<JPanel> panels=new ArrayList<JPanel>();
 	//
+	private MyMouseEvent mEvent=new MyMouseEvent();
 	public static boolean isBlack=false;//标志棋子的颜色
 	public static int[][] chessBoard=new int[17][17]; //棋盘棋子的摆放情况：0无子，1黑子，－1白子
 	private static HashSet<Point> toJudge=new HashSet<Point>(); // ai可能会下棋的点
@@ -39,62 +44,46 @@ public class GameFrame extends JFrame {
 	public static final int MAXN=1<<28;
 	public static final int MINN=-MAXN; 
 	private static int searchDeep=4;	//搜索深度
-	private static final int size=15;	//棋盘大小
+	public static final int size=15;	//棋盘大小
 	public static boolean isFinished=false;
 	
-	public GameFrame() {
+	private GameFrame() {
 //		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(550, 100,TABLE_WIDTH, TABLE_HEIGHT);
 //		setOpacity(0.9f);
 		setResizable(false);
 		setContentPane(contentPanel);
+//		panels.add(contentPanel);
 		// 实现鼠标事件接口
-		contentPanel.addMouseListener(new MouseAdapter() {
-			
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				int x=round(e.getX()),y=round(e.getY());
-				int xPos=(int)((x-PANEL_HGAP)/40)+1;
-				int yPos=(int)((y-PANEL_VGAP)/40)+1;
-				System.out.println("("+xPos+","+yPos+")"+" "+chessBoard[yPos][xPos]);
-				if(xPos>=1&& xPos<=size && yPos>=1 && yPos<=size 
-						&&GameFrame.chessBoard[yPos][xPos]==0 && GameFrame.isBlack==false){
-					putChess(xPos,yPos);
-					if(!GameFrame.isFinished){
-						GameFrame.isBlack=true;
-						myAI();
-					}
-					GameFrame.isFinished=false;
-				}
-			}
-		});
+		contentPanel.addMouseListener(mEvent);
+		initChessBoard();
 	}
 	
-	// 得到鼠标点击点附近的棋盘精准点
-	public int round(int x){
-		return (x%40<15)?x/40*40:x/40*40+40;
+	public void initPanel(){
+		Graphics g=contentPanel.getGraphics();
+		if(g!=null){/////////////////////////
+			g.drawImage(bgImg,8,68,714,690,null);
+			g.setColor(Color.BLACK);
+			Graphics2D g2=(Graphics2D)g;
+			g2.setStroke(new BasicStroke(2.0f));
+			for(int i=PANEL_VGAP;i<=PANEL_VGAP+40*14;i+=40)
+				g2.drawLine(PANEL_HGAP, i, PANEL_HGAP+40*14, i);
+			for(int i=PANEL_HGAP;i<=PANEL_HGAP+40*14;i+=40)
+				g2.drawLine(i, PANEL_VGAP, i, PANEL_VGAP+40*14);
+			g.fillOval(PANEL_HGAP+40*3-6, PANEL_VGAP+40*3-6, 12, 12);
+			g.fillOval(PANEL_HGAP+40*11-6, PANEL_VGAP+40*3-6, 12, 12);
+			g.fillOval(PANEL_HGAP+40*3-6, PANEL_VGAP+40*11-6, 12, 12);
+			g.fillOval(PANEL_HGAP+40*11-6, PANEL_VGAP+40*11-6, 12, 12);
+			g.fillOval(PANEL_HGAP+40*7-6, PANEL_VGAP+40*7-6, 12, 12);
+		}
 	}
 	
-	@Override
-	public void paint(Graphics g) {//initChessBoard
-		super.paint(g);
+	public void initChessBoard(){
+		initPanel();
 		isBlack=false;
 		toJudge.clear();
-		g.drawImage(bgImg,11,100,714,690,null);
-		g.setColor(Color.BLACK);
-		Graphics2D g2=(Graphics2D)g;
-		g2.setStroke(new BasicStroke(2.0f));
-		for(int i=BOARD_VGAP;i<=BOARD_VGAP+40*14;i+=40)
-			g2.drawLine(BOARD_HGAP, i, BOARD_HGAP+40*14, i);
-		for(int i=BOARD_HGAP;i<=BOARD_HGAP+40*14;i+=40)
-			g2.drawLine(i, BOARD_VGAP, i, BOARD_VGAP+40*14);
-		g.fillOval(BOARD_HGAP+40*3-6, BOARD_VGAP+40*3-6, 12, 12);
-		g.fillOval(BOARD_HGAP+40*11-6, BOARD_VGAP+40*3-6, 12, 12);
-		g.fillOval(BOARD_HGAP+40*3-6, BOARD_VGAP+40*11-6, 12, 12);
-		g.fillOval(BOARD_HGAP+40*11-6, BOARD_VGAP+40*11-6, 12, 12);
-		g.fillOval(BOARD_HGAP+40*7-6, BOARD_VGAP+40*7-6, 12, 12);
-//		init();
+		System.out.println("paint");///////////////////
 		for(int i=1;i<=15;i++){
 			for(int j=1;j<=15;j++)
 				chessBoard[i][j]=0;
@@ -112,7 +101,12 @@ public class GameFrame extends JFrame {
 				g.setColor(Color.BLACK);
 			else 
 				g.setColor(Color.WHITE);
+//		initPanel();//////////////////////////////////////
+//		if(!panels.isEmpty())
+//			setContentPane(panels.get(panels.size()-1));
 		g.fillOval((x-1)*40+PANEL_HGAP-15,(y-1)*40+PANEL_VGAP-15,30,30);
+//		panels.add(contentPanel);
+//		contentPanel.setVisible(true);
 //		int xPos=(int)((x-PANEL_HGAP)/40)+1;
 //		int yPos=(int)((y-PANEL_VGAP)/40)+1;
 		System.out.print(x+" "+y+" ");//'+"==="+x+" "+y);
@@ -123,6 +117,8 @@ public class GameFrame extends JFrame {
 			JOptionPane.showMessageDialog(null,s);
 			isBlack=true;
 //			repaint();//initChessBoard
+//			initChessBoard();
+			ContentPanel.isStarted=false;
 		}
 		else{
 			Point p=new Point(x,y);
@@ -336,6 +332,12 @@ public class GameFrame extends JFrame {
 		return false;
 	}
 	
+	public static GameFrame getFrame(){
+		if(frame==null)
+			frame=new GameFrame();
+		return frame;
+	}
+	
 }
 	
 // 树节点
@@ -361,3 +363,28 @@ class Node{
 	}
 }
 
+class MyMouseEvent extends MouseAdapter{
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		if(ContentPanel.isStarted){
+		int x=round(e.getX()),y=round(e.getY());
+		int xPos=(int)((x-GameFrame.PANEL_HGAP)/40)+1;
+		int yPos=(int)((y-GameFrame.PANEL_VGAP)/40)+1;
+		System.out.println("("+xPos+","+yPos+")"+" "+GameFrame.chessBoard[yPos][xPos]);
+		if(xPos>=1&& xPos<=GameFrame.size && yPos>=1 && yPos<=GameFrame.size 
+				&&GameFrame.chessBoard[yPos][xPos]==0 && GameFrame.isBlack==false){
+			GameFrame.getFrame().putChess(xPos,yPos);
+			if(!GameFrame.isFinished){
+				GameFrame.isBlack=true;
+				GameFrame.getFrame().myAI();
+			}
+			GameFrame.isFinished=false;
+		}
+		}
+	}
+
+	// 得到鼠标点击点附近的棋盘精准点
+	public int round(int x){
+		return (x%40<15)?x/40*40:x/40*40+40;
+	}
+}
