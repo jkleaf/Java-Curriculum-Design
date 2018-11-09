@@ -9,6 +9,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -20,19 +21,25 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
 import org.game.GameFrame;
 import org.tools.ImgUtil;
+import javax.swing.JTextArea;
+import javax.swing.UIManager;
 
 
 public class ContentPanel extends JPanel {
 	
+	private static SettingDialog settingDialog=new SettingDialog();
 	public static final int PANEL_HGAP=80;
 	public static final int PANEL_VGAP=120;	
 	private static Image bgImg=ImgUtil.getImage("bg.png");
 	public static boolean isStarted;//isPainted;
-	private static final String[] items=new String[]{"玩家","电脑"}; 
+	public static JTextArea textArea;
+//	private static final String[] items=new String[]{"玩家","电脑"};
 	
 	public ContentPanel() {
 		this.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -53,10 +60,12 @@ public class ContentPanel extends JPanel {
 				if(e.getActionCommand().equals("开始游戏")){
 					isStarted=true;
 					button1.setText("结束游戏");
+					textArea.append("游戏开始！\n");
 				}else{
 					button1.setText("开始游戏");
 					GameFrame.getFrame().initChessBoard();
 					isStarted=false;
+					textArea.setText("");
 				}
 			}
 		});
@@ -77,6 +86,11 @@ public class ContentPanel extends JPanel {
 		button3.setPreferredSize(new Dimension(150, 50));
 		button3.setBackground(new Color(211, 211, 211));
 		addButtonEnteredListener(button3, new Color(238,230,133), new Color(211, 211, 211));
+		button3.addActionListener(new ActionListener() {			
+			public void actionPerformed(ActionEvent e) {
+				settingDialog.setVisible(true);
+			}
+		});
 		panel1_2.add(button3);
 		
 		JPanel panel2 = new JPanel();
@@ -84,36 +98,61 @@ public class ContentPanel extends JPanel {
 		this.add(panel2, BorderLayout.CENTER);
 		
 		JPanel panel3 = new JPanel();
+		panel3.setLayout(new BorderLayout());
 		panel3.setBorder(BorderFactory.createLineBorder(Color.lightGray,2));
+		panel3.setPreferredSize(new Dimension(164, 200));
+		textArea = new JTextArea();
+		textArea.setLineWrap(true);
+		textArea.setWrapStyleWord(true);
+		textArea.setEditable(false);
+		textArea.setFont(new Font("华文新魏", Font.PLAIN, 15));
+		JScrollPane scrollPane=new JScrollPane(textArea);
+		panel3.add(scrollPane,BorderLayout.CENTER);
 		this.add(panel3, BorderLayout.EAST);
 		
-		JPanel panel3_1 = new JPanel();
-		panel3.add(panel3_1);
-		panel3_1.setLayout(new BoxLayout(panel3_1, BoxLayout.Y_AXIS));
-		panel3_1.add(Box.createVerticalStrut(100));
-		JPanel panel3_1_1=new JPanel();
-		panel3_1_1.setPreferredSize(new Dimension(150, 200));
-		panel3_1_1.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY,1));
-		panel3_1.add(panel3_1_1);
-		panel3_1_1.setLayout(new BorderLayout(0, 0));
+		JButton btnNewButton = new JButton("\u6E05 \u5C4F");
+		btnNewButton.setBackground(new Color(200, 200, 200));
+		btnNewButton.setFont(new Font("华文新魏", Font.PLAIN, 25));
+		panel3.add(btnNewButton, BorderLayout.SOUTH);
+		btnNewButton.addActionListener(new ActionListener() {			
+			public void actionPerformed(ActionEvent e) {
+				textArea.setText("");
+			}
+		});
 		
-		JComboBox<String> comboBox = new JComboBox();
-		comboBox.addItem(items[0]);
-		comboBox.addItem(items[1]);
-		panel3_1_1.add(comboBox, BorderLayout.NORTH);
-		panel3_1.add(Box.createVerticalStrut(100));
-		JPanel panel3_1_2=new JPanel();
-		panel3_1_2.setPreferredSize(new Dimension(150, 200));
-		panel3_1_2.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY,1));
-		panel3_1_1.setBackground(new Color(211, 211, 211));
-		panel3_1.add(panel3_1_2);
-		panel3_1_2.setLayout(new BorderLayout(0, 0));
-		panel3_1_2.setBackground(new Color(211, 211, 211));
-		JComboBox<String> comboBox_1 = new JComboBox();
-		comboBox_1.addItem(items[1]);
-		comboBox_1.addItem(items[0]);
-		panel3_1_2.add(comboBox_1, BorderLayout.NORTH);
+//		JPanel panel3_1 = new JPanel();
+//		panel3.add(panel3_1);
+//		panel3_1.setLayout(new BoxLayout(panel3_1, BoxLayout.Y_AXIS));
+//		panel3_1.add(Box.createVerticalStrut(100));
+//		JPanel panel3_1_1=new JPanel();
+//		panel3_1_1.setPreferredSize(new Dimension(150, 200));
+//		panel3_1_1.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY,1));
+//		panel3_1.add(panel3_1_1);
+//		panel3_1_1.setLayout(new BorderLayout(0, 0));
+//		
+////		JComboBox<String> comboBox = new JComboBox();
+////		comboBox.addItem(items[0]);
+////		comboBox.addItem(items[1]);
+////		panel3_1_1.add(comboBox, BorderLayout.NORTH);
+//		panel3_1.add(Box.createVerticalStrut(100));
+//		JPanel panel3_1_2=new JPanel();
+//		panel3_1_2.setPreferredSize(new Dimension(150, 200));
+//		panel3_1_2.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY,1));
+//		panel3_1_1.setBackground(new Color(211, 211, 211));
+//		panel3_1.add(panel3_1_2);
+//		panel3_1_2.setLayout(new BorderLayout(0, 0));
+//		panel3_1_2.setBackground(new Color(211, 211, 211));
+//		JComboBox<String> comboBox_1 = new JComboBox();
+//		comboBox_1.addItem(items[1]);
+//		comboBox_1.addItem(items[0]);
+//		panel3_1_2.add(comboBox_1, BorderLayout.NORTH);
 	}
+	
+//	@Override
+//	protected void paintComponent(Graphics g) {
+//		// TODO Auto-generated method stub
+//		super.paintComponent(g);
+//	}
 	
 	@Override
 	public void paint(Graphics g) {
@@ -145,6 +184,14 @@ public class ContentPanel extends JPanel {
 				button.setBackground(c2);
 			}
 		});
+	}
+	
+	public static void setTextArea(String player,int x,int y){
+		textArea.append(player+"("+x+","+y+")\n");
+	}
+	
+	public static void setTextArea(String txt){
+		textArea.append(txt);
 	}
 	
 }

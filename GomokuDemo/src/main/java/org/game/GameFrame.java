@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import org.gui.ContentPanel;
+import org.gui.SettingDialog;
 import org.tools.ImgUtil;
 
 import java.awt.Graphics;
@@ -16,7 +17,6 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.security.cert.CertPathChecker;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -33,6 +33,7 @@ public class GameFrame extends JFrame {
 	public static final int PANEL_HGAP=80;
 	public static final int PANEL_VGAP=120;	
 	private static Image bgImg=ImgUtil.getImage("bg.png");
+	public static boolean playerFirst;
 	private ArrayList<JPanel> panels=new ArrayList<JPanel>();
 	//
 	private MyMouseEvent mEvent=new MyMouseEvent();
@@ -49,6 +50,7 @@ public class GameFrame extends JFrame {
 	
 	private GameFrame() {
 //		setUndecorated(true);
+		setTitle("\t\t\u5355\u673A\u7248\u4E94\u5B50\u68CB");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(550, 100,TABLE_WIDTH, TABLE_HEIGHT);
 //		setOpacity(0.9f);
@@ -111,9 +113,11 @@ public class GameFrame extends JFrame {
 //		int yPos=(int)((y-PANEL_VGAP)/40)+1;
 		System.out.print(x+" "+y+" ");//'+"==="+x+" "+y);
 		chessBoard[y][x]=isBlack?1:-1;//////
+		ContentPanel.setTextArea(!isBlack?"玩家(黑子)：":"电脑(白子)：", x, y);
 		System.out.println(chessBoard[y][x]);
 		if(isEnd(x,y)){
-			String s=!GameFrame.isBlack?"黑子胜":"白子胜";
+			ContentPanel.setTextArea("游戏结束！");
+			String s=!GameFrame.isBlack?"你赢了！！":"什么？！你竟然赢不过电脑...";
 			JOptionPane.showMessageDialog(null,s);
 			isBlack=true;
 //			repaint();//initChessBoard
@@ -373,7 +377,7 @@ class MyMouseEvent extends MouseAdapter{
 		System.out.println("("+xPos+","+yPos+")"+" "+GameFrame.chessBoard[yPos][xPos]);
 		if(xPos>=1&& xPos<=GameFrame.size && yPos>=1 && yPos<=GameFrame.size 
 				&&GameFrame.chessBoard[yPos][xPos]==0 && GameFrame.isBlack==false){
-			GameFrame.getFrame().putChess(xPos,yPos);
+				GameFrame.getFrame().putChess(xPos,yPos);
 			if(!GameFrame.isFinished){
 				GameFrame.isBlack=true;
 				GameFrame.getFrame().myAI();
