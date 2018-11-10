@@ -21,7 +21,7 @@ public class AboutDialog extends JDialog{
 	public AboutDialog() {
 		setTitle("¹ØÓÚ...");
 		setIconImage(blankImg);
-		setBounds(920, 200, 150, 200);
+		setBounds(890, 200, 150, 200);
 		setBackground(new Color(211, 211, 211));
 		setAlwaysOnTop(true);
 		getContentPane().setLayout(new BorderLayout());

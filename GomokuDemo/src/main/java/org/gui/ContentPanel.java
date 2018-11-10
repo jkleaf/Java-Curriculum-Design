@@ -47,13 +47,16 @@ public class ContentPanel extends JPanel {
 		button1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(e.getActionCommand().equals("开始游戏")){
+					GameFrame.setClear=false;
 					isStarted=true;
-					button1.setText("结束游戏");
 					textArea.append("游戏开始！\n");
+					GameFrame.getFrame().initChessBoard();
+					button1.setText("结束游戏");
 					button3.setEnabled(false);
 				}else{
 					button1.setText("开始游戏");
 					button2.setEnabled(true);
+					GameFrame.setClear=true;
 					GameFrame.getFrame().initChessBoard();
 					isStarted=false;
 					GameFrame.chessList.clear();

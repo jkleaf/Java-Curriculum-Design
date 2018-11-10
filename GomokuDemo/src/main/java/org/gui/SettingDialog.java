@@ -16,6 +16,9 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import org.game.GameFrame;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JCheckBox;
@@ -43,16 +46,25 @@ public class SettingDialog extends JDialog {
 		});
 		setUndecorated(true);
 		setOpacity(0.9f);
-		setBounds(830, 400, 350, 200);
+		setBounds(790, 400, 350, 200);
 		setTitle("ÉèÖÃ");
 		setAlwaysOnTop(true);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		
-		JCheckBox chckbxNewCheckBox = new JCheckBox("\u73A9\u5BB6\u5148\u624B");
+		final JCheckBox chckbxNewCheckBox = new JCheckBox("\u73A9\u5BB6\u5148\u624B");
 		chckbxNewCheckBox.setFont(new Font("Ó×Ô²", Font.BOLD, 18));
 		chckbxNewCheckBox.setSelected(checkboxSelected);
+		chckbxNewCheckBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(chckbxNewCheckBox.isSelected()){
+					GameFrame.playerFirst=true;
+				}else{
+					GameFrame.playerFirst=false;
+				}
+			}
+		});
 		
 		final JComboBox<String> comboBox = new JComboBox<String>();
 		comboBox.setFont(new Font("Ó×Ô²", Font.BOLD, 18));
@@ -139,6 +151,7 @@ public class SettingDialog extends JDialog {
 //						dispose();
 						ContentPanel.button1.setEnabled(true);
 						ContentPanel.button2.setEnabled(true);
+						GameFrame.getFrame().selectBackGround();
 						setVisible(false);
 					}
 				});

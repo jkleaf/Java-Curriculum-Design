@@ -5,6 +5,7 @@ import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import org.gui.ContentPanel;
+import org.gui.SettingDialog;
 import org.tools.ImgUtil;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -27,12 +28,12 @@ public class GameFrame extends JFrame {
 	public static final int TABLE_WIDTH=900;
 	public static final int TABLE_HEIGHT=800;
 	public static final int PANEL_HGAP=80;
-	public static final int PANEL_VGAP=120;	
-	private static Image bgImg=ImgUtil.getImage("bg.png");
+	public static final int PANEL_VGAP=120;
+	private static Image bgImg=ImgUtil.getImage("bg0.png");
 	private static Image gomukuIcon=ImgUtil.getImage("gomokuIcon.jpg");
 	private static Image blackChessImg=ImgUtil.getImage("black.gif");
 	private static Image whiteChessImg=ImgUtil.getImage("white.gif");
-	public static boolean playerFirst=true;
+	public static boolean playerFirst=true,setClear;
 	private Image offScreenImage;
 	public static ArrayList<ChessXY> chessList=new ArrayList<ChessXY>();
 	private MyMouseEvent mEvent=new MyMouseEvent();
@@ -60,6 +61,11 @@ public class GameFrame extends JFrame {
 		initChessBoard();
 //		setVisible(true);
 //		g=contentPanel.getGraphics();
+	}
+	
+	public void selectBackGround(){
+		repaint();
+		bgImg=ImgUtil.getImage("bg"+SettingDialog.bgSelectIndex+".png");
 	}
 	
 	@Override
@@ -103,7 +109,6 @@ public class GameFrame extends JFrame {
 	
 	public void initChessBoard(){
 //		initPanel();
-		repaint();///////////////////
 		isBlack=false;
 		toJudge.clear();
 		System.out.println("paint");///////////////////
@@ -111,6 +116,11 @@ public class GameFrame extends JFrame {
 			for(int j=1;j<=15;j++)
 				chessBoard[i][j]=0;
 		}
+		if(!playerFirst&&!setClear){
+			chessBoard[8][8]=-1;
+			ContentPanel.setTextArea("电脑(黑子)：",8,8);
+		}
+		repaint();///////////////////
 	}
 	
 	public void initListener(){
@@ -127,10 +137,16 @@ public class GameFrame extends JFrame {
 //		g.fillOval((x-1)*40+PANEL_HGAP-15,(y-1)*40+PANEL_VGAP-15,30,30);//
 //		contentPanel.setVisible(true);
 		System.out.print(x+" "+y+" ");//'+"==="+x+" "+y);
-		chessBoard[y][x]=isBlack?1:-1;//////
+		if(playerFirst){
+			chessBoard[y][x]=isBlack?1:-1;//////
+			ContentPanel.setTextArea(!isBlack?"玩家(黑子)：":"电脑(白子)：", x, y);
+		}
+		else{
+			chessBoard[y][x]=isBlack?-1:1;
+			ContentPanel.setTextArea(!isBlack?"玩家(白子)：":"电脑(黑子)：", x, y);
+		}
 		repaint();///////////////////////////
 		chessList.add(new ChessXY(x,y));
-		ContentPanel.setTextArea(!isBlack?"玩家(黑子)：":"电脑(白子)：", x, y);
 		System.out.println(chessBoard[y][x]);
 		if(isEnd(x,y)){
 			ContentPanel.setTextArea("游戏结束！");
@@ -156,6 +172,7 @@ public class GameFrame extends JFrame {
 	private class ChessXY{
 		private int x;
 		private int y;
+		@SuppressWarnings("unused")
 		public ChessXY() {
 		}
 		public ChessXY(int x, int y) {
@@ -175,10 +192,8 @@ public class GameFrame extends JFrame {
 			ContentPanel.setTextArea("玩家悔棋一步!\n");
 			chessBoard[chessList.get(chessList.size()-1).getY()]
 					  [chessList.get(chessList.size()-1).getX()]=0;
-			if(playerFirst){
-				chessBoard[chessList.get(chessList.size()-2).getY()]
-						  [chessList.get(chessList.size()-2).getX()]=0;
-			}
+			chessBoard[chessList.get(chessList.size()-2).getY()]
+					  [chessList.get(chessList.size()-2).getX()]=0;
 			repaint();
 		}
 	}
@@ -334,7 +349,6 @@ public class GameFrame extends JFrame {
 		while(++col<=size && chessBoard[row][col]==chessBoard[y][x]) ++cnt;
 		if(cnt>=5){
 			isFinished=true;
-			System.err.println(1+" "+cnt);
 			return true;
 		}
 		col=x;row=y;
@@ -344,7 +358,6 @@ public class GameFrame extends JFrame {
 		while(++row<=size && chessBoard[row][col]==chessBoard[y][x]) ++cnt;
 		if(cnt>=5){
 			isFinished=true;
-			System.err.println(2+" "+cnt);
 			return true;
 		}
 		col=x;row=y;
@@ -354,7 +367,6 @@ public class GameFrame extends JFrame {
 		while(++col<=size && ++row<=size && chessBoard[row][col]==chessBoard[y][x]) ++cnt;
 		if(cnt>=5){
 			isFinished=true;
-			System.err.println(3+" "+cnt);
 			return true;
 		}
 		col=x;row=y;
@@ -364,7 +376,6 @@ public class GameFrame extends JFrame {
 		while(--row>0 && ++col<=size && chessBoard[row][col]==chessBoard[y][x]) ++cnt;
 		if(cnt>=5){
 			isFinished=true;
-			System.err.println(4+" "+cnt);
 			return true;
 		}
 		return false;
