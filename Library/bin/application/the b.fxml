@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="214.0" prefWidth="558.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainPanel">
+   <children>
+      <SplitPane dividerPositions="0.22688172043010751" prefHeight="561.0" prefWidth="932.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="559.0" prefWidth="420.0">
+               <children>
+                  <Button layoutX="-7.0" layoutY="280.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="222.0" text="图书归还" textOverrun="LEADING_ELLIPSIS">
+                     <font>
+                        <Font name="Serif Regular" size="26.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="-8.0" layoutY="350.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="222.0" text="管理员模式">
+                     <font>
+                        <Font name="Serif Regular" size="26.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="pieChartButton" layoutX="-4.0" layoutY="419.0" mnemonicParsing="false" onAction="#loadPieChart" prefHeight="70.0" prefWidth="214.0" text=" o(*￣▽￣*)ブ">
+                     <font>
+                        <Font name="Serif Regular" size="26.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="-4.0" layoutY="489.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="214.0" text="退出系统">
+                     <font>
+                        <Font name="Serif Regular" size="26.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="-7.0" layoutY="210.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="222.0" text="借阅图书" textOverrun="CLIP">
+                     <font>
+                        <Font name="Serif Regular" size="26.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="DISAPPEAR" />
+                     </cursor>
+                  </Button>
+                  <Button layoutX="-3.0" layoutY="140.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="214.0" text="查询图书" textOverrun="CLIP">
+                     <font>
+                        <Font name="Yu Gothic Regular" size="25.0" />
+                     </font>
+                  </Button>
+                  <ImageView fitHeight="155.0" fitWidth="207.0" layoutY="-15.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+               <opaqueInsets>
+                  <Insets top="5.0" />
+               </opaqueInsets>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="542.0" prefWidth="644.0">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <children>
+                  <Button fx:id="searchButton" layoutX="497.0" layoutY="75.0" mnemonicParsing="false" onAction="#addSearchButtonClicked" prefHeight="28.0" prefWidth="50.0" text="搜索" />
+                  <TextField layoutX="147.0" layoutY="75.0" prefHeight="28.0" prefWidth="316.0" promptText="请输入您要查询的书籍书名或作者" />
+                  <TableView fx:id="table" editable="true" layoutY="145.0" prefHeight="414.0" prefWidth="715.0">
+                    <columns>
+                      <TableColumn fx:id="b_id" prefWidth="139.0" text="b_id" />
+                      <TableColumn fx:id="b_name" minWidth="0.0" prefWidth="125.0" text="b_name" />
+                        <TableColumn fx:id="pub" minWidth="118.0" prefWidth="130.0" text="pub" />
+                        <TableColumn fx:id="p_date" minWidth="114.0" prefWidth="154.0" text="p_date" />
+                        <TableColumn fx:id="b_type" minWidth="139.0" prefWidth="166.0" text="b_type" />
+                    </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>
