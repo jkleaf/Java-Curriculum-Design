@@ -49,19 +49,9 @@ public class LoginDemo1 extends Application {
 //		Main.main(null);
 		if(LoginModel.isLogin(textField.getText(), passwordField.getText())){
 			System.out.println("successfully login!");
-			((Node)e.getSource()).getScene().getWindow().hide();
-			Stage mainPanel=new Stage();
-			AnchorPane root = FXMLLoader.load(getClass().getResource("the b.fxml"));
-			Scene scene = new Scene(root,935,565);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			mainPanel.setScene(scene);
-			mainPanel.show();
+			new PanelJump().Jump2NewPanel(e, true, "the b.fxml", 935, 565);
 		}else{
 			System.err.println("username or password is incorrect!");
 		}
-	}
-	
-	public void SignOutButtonClicked(ActionEvent e){
-		
 	}
 }

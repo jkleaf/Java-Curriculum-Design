@@ -1,19 +1,15 @@
 package org.po;
 
-import java.sql.*;
-import java.sql.Date;
-import java.util.*;
-
 public class Types {
 
     private String type_name;
-    private String type;
+    private Integer type;
 
 	public String getType_name(){
 		return type_name;
 	}
 
-	public String getType(){
+	public Integer getType(){
 		return type;
 	}
 
@@ -21,7 +17,7 @@ public class Types {
 		this.type_name=type_name;
 	}
 
-	public void setType(String type){
+	public void setType(Integer type){
 		this.type=type;
 	}
 

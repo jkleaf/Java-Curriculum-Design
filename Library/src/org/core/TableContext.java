@@ -18,7 +18,7 @@ public class TableContext {
 	
 	private static Map<String, TableInfo> tables=new HashMap<>();
 	
-	public static Map<Class, TableInfo> poClassTableMap=new HashMap<>();
+	public static Map<Class, TableInfo> classTableMap=new HashMap<>();
 	
 	private TableContext(){}
 	
@@ -52,7 +52,7 @@ public class TableContext {
 				try {
 					Class<?> c=Class.forName(DBmanager.getConf().getPoPackage()
 							+"."+StringUtils.firstChar2UpperCase(tableInfo.getTname()));
-					poClassTableMap.put(c, tableInfo);
+					classTableMap.put(c, tableInfo);
 				} catch (ClassNotFoundException e) {
 					e.printStackTrace();
 				}

@@ -12,33 +12,46 @@ import java.util.List;
 
 import org.bean.ColumnInfo;
 import org.bean.TableInfo;
+import org.join.BookAndTypes;
+import org.po.Book;
 import org.tools.ReflectUtils;
+
+import application.DialogDisplay;
+import application.MainPanel;
 
 
 public class MySQLQuery implements Query{
 	
-	public static void main(String[] args) {
-//		Emp emp=new Emp();
+	
+	public void demo1(){
+//		Book book=new Book();
 //		emp.setId(2);
 //		emp.setDname("3545dsv");
 //		new MySQLQuery().update(emp, new String[]{"dname"});
 //		new MySQLQuery().insert(emp);
 //		new MySQLQuery().delete(emp);
 //		new MySQLQuery().delete(Dept.class, 2);
-		//////////////////////////////////////////////
-//		List<Emp> list=new MySQLQuery().queryRows("select id,dname,age from emp where id>=? and age<?",
-//				Emp.class, new Object[]{3,23});
-//		System.out.println(list);
-//		for (Emp emp : list) {
-//			System.out.println(emp.getId()+" "+emp.getDname()+" "+emp.getAge());
+	}
+	
+	public static void main(String[] args) {
+//		List<Book> list=new MySQLQuery().queryRows("select b_id,b_name,b_type from book where b_id>? and b_type<?",
+//				Book.class, new Object[]{1001,4});
+////		System.out.println(list);
+//		for (Book book : list) {
+//			System.out.println(book.getB_id()+" "+book.getB_name()+" "+book.getB_type());
 //		}
-		//////////////////////////////////////////////
 //		Number num=new MySQLQuery().queryNumber("select count(*) from emp where id>?", new Object[]{1});
 //		System.out.println(num.doubleValue());
+		List<BookAndTypes> list=new MySQLQuery().queryRows("select b_id,b_name,type_name"
+				+ " from book,types where book.b_type=types.type",
+				BookAndTypes.class, null);
+		for (BookAndTypes bt : list) {
+			System.out.println(bt.getB_id()+" "+bt.getB_name()+" "+bt.getType_name());
+		}
 	}
 	
 	@Override
-	public int executeSQL(String sql, Object[] params) {
+	public int executeSQL(String sql, Object[] params){
 		Connection conn=DBmanager.getConn();
 		int count=0;
 		PreparedStatement ps=null;
@@ -50,8 +63,10 @@ public class MySQLQuery implements Query{
 				}
 			}
 			count=ps.executeUpdate();
-		} catch (SQLIntegrityConstraintViolationException e){
+		}catch (SQLIntegrityConstraintViolationException e){
 			System.err.println("主键值为空或主键值已重复!");
+//			DialogDisplay.errorDialog("错误", "主键值为空或主键值已重复!");
+//			MainPanel.textId.clear();//
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
@@ -64,7 +79,7 @@ public class MySQLQuery implements Query{
 	public void insert(Object obj) {
 		Class<?> c=obj.getClass();
 		List<Object> params=new ArrayList<>();
-		TableInfo tableInfo=TableContext.poClassTableMap.get(c);
+		TableInfo tableInfo=TableContext.classTableMap.get(c);
 		StringBuilder sql=new StringBuilder("insert into "+tableInfo.getTname()+" (");
 		int countNotNullFields=0;
 		Field[] fields=c.getDeclaredFields();
@@ -88,7 +103,7 @@ public class MySQLQuery implements Query{
 
 	@Override
 	public void delete(Class clazz, Object id) {
-		TableInfo tableInfo=TableContext.poClassTableMap.get(clazz);
+		TableInfo tableInfo=TableContext.classTableMap.get(clazz);
 		if(tableInfo==null)
 			System.out.println("null");
 		ColumnInfo onlyPriKey=tableInfo.getOnlyPriKey();
@@ -101,7 +116,7 @@ public class MySQLQuery implements Query{
 	@Override
 	public void delete(Object obj) {
 		Class<? extends Object> c=obj.getClass();
-		TableInfo tableInfo=TableContext.poClassTableMap.get(c);
+		TableInfo tableInfo=TableContext.classTableMap.get(c);
 		ColumnInfo onlyPriKey=tableInfo.getOnlyPriKey();
 //		if(onlyPriKey!=null)
 //			System.out.println(onlyPriKey.getName());
@@ -115,7 +130,7 @@ public class MySQLQuery implements Query{
 	public int update(Object obj, String[] fieldNames) {
 		Class c=obj.getClass();
 		List<Object> params=new ArrayList<>();
-		TableInfo tableInfo=TableContext.poClassTableMap.get(c);
+		TableInfo tableInfo=TableContext.classTableMap.get(c);
 		ColumnInfo priKey=tableInfo.getOnlyPriKey();
 		StringBuilder sql=new StringBuilder("update "+tableInfo.getTname()+" set ");
 		for (String fname : fieldNames) {
