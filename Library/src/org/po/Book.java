@@ -52,8 +52,10 @@ public class Book {
 	        return result.toString();
 	    }
 
+	public String getFilepath() {
+		return filepath;
+	}
 	
-
 	public void setB_name(String b_name){
 		this.b_name=b_name;
 	}
@@ -73,9 +75,13 @@ public class Book {
 	public void setPub(String pub){
 		this.pub=pub;
 	}
-	public void setContent(String filepath) {
+	
+//	public void setContend(String filepath){
+//		this.filepath=filepath;
+//	}
+	
+	public void setFilepath(String filepath) {
 		this.filepath=filepath;
 	}
-	
 
 }

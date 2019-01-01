@@ -16,8 +16,7 @@ import org.join.BookAndTypes;
 import org.po.Book;
 import org.tools.ReflectUtils;
 
-import application.DialogDisplay;
-import application.MainPanel;
+import application1.MainPanel;
 
 
 public class MySQLQuery implements Query{

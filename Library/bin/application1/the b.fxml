@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="214.0" prefWidth="558.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application1.MainPanel">
+   <children>
+      <SplitPane dividerPositions="0.22688172043010751" prefHeight="561.0" prefWidth="932.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="559.0" prefWidth="420.0">
+               <children>
+                  <Button layoutX="-7.0" layoutY="349.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="222.0" text="图书归还" textOverrun="LEADING_ELLIPSIS">
+                     <font>
+                        <Font name="Serif Regular" size="26.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="pieChartButton" layoutX="-4.0" layoutY="419.0" mnemonicParsing="false" onAction="#loadPieChart" prefHeight="70.0" prefWidth="214.0" text=" o(*￣▽￣*)ブ">
+                     <font>
+                        <Font name="Serif Regular" size="26.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="signOutButton" layoutX="-4.0" layoutY="489.0" mnemonicParsing="false" onAction="#SignOutButtonClicked" prefHeight="70.0" prefWidth="214.0" text="退出系统">
+                     <font>
+                        <Font name="Serif Regular" size="26.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="-7.0" layoutY="280.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="222.0" text="借阅图书" textOverrun="CLIP">
+                     <font>
+                        <Font name="Serif Regular" size="26.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="DISAPPEAR" />
+                     </cursor>
+                  </Button>
+                  <Button layoutX="-3.0" layoutY="210.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="214.0" text="查询图书" textOverrun="CLIP">
+                     <font>
+                        <Font name="Yu Gothic Regular" size="25.0" />
+                     </font>
+                  </Button>
+                  <TextArea fx:id="bookDsc" layoutX="-4.0" prefHeight="210.0" prefWidth="214.0" />
+               </children>
+               <opaqueInsets>
+                  <Insets top="5.0" />
+               </opaqueInsets>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" opacity="0.31" prefHeight="542.0" prefWidth="644.0" style="-fx-opacity: 0.8;">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <children>
+                  <Button fx:id="searchButton" layoutX="499.0" layoutY="90.0" mnemonicParsing="false" onAction="#addSearchButtonClicked" prefHeight="28.0" prefWidth="50.0" styleClass="searchButton" stylesheets="@application.css" text="搜索" />
+                  <TextField layoutX="148.0" layoutY="90.0" prefHeight="28.0" prefWidth="316.0" promptText="请输入您要查询的书籍书名或作者" />
+                  <TableView fx:id="table" editable="true" layoutY="145.0" prefHeight="414.0" prefWidth="715.0">
+                    <columns>
+                      <TableColumn fx:id="b_id" prefWidth="139.0" text="b_id" />
+                      <TableColumn fx:id="b_name" minWidth="0.0" prefWidth="125.0" text="b_name" />
+                        <TableColumn fx:id="pub" minWidth="118.0" prefWidth="130.0" text="pub" />
+                        <TableColumn fx:id="p_date" minWidth="114.0" prefWidth="154.0" text="p_date" />
+                        <TableColumn fx:id="b_type" minWidth="139.0" prefWidth="166.0" text="b_type" />
+                    </columns>
+                  </TableView>
+                  <HBox layoutX="14.0" layoutY="14.0" prefHeight="30.0" prefWidth="715.0">
+                     <children>
+                        <TextField fx:id="textId" prefHeight="30.0" prefWidth="139.0" />
+                        <TextField fx:id="textName" layoutX="149.0" layoutY="10.0" prefHeight="30.0" prefWidth="139.0" />
+                        <TextField fx:id="textPub" prefHeight="30.0" prefWidth="139.0" />
+                        <TextField fx:id="textDate" layoutX="149.0" layoutY="10.0" prefHeight="30.0" prefWidth="139.0" />
+                        <TextField fx:id="textType" layoutX="288.0" layoutY="10.0" prefHeight="30.0" prefWidth="139.0" />
+                     </children>
+                  </HBox>
+                  <Button layoutX="186.0" layoutY="54.0" mnemonicParsing="false" onAction="#addButton" text="Add" />
+                  <Button layoutX="457.0" layoutY="54.0" mnemonicParsing="false" onAction="#deleteButton" text="Delete" />
+                  <Button fx:id="clearTableButton" layoutX="639.0" layoutY="105.0" mnemonicParsing="false" onAction="#clearTable" text="Clear" />
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

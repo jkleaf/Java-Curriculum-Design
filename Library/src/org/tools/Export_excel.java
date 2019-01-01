@@ -8,6 +8,7 @@ import org.join.Borrow_Users_Book;
 import org.po.Book;
 import org.po.Borrow_table;
 import org.po.Register;
+import org.po.Register_Users;
 import org.po.Types;
 import org.po.Users;
 
@@ -22,7 +23,7 @@ public class Export_excel {
 	public static <T> void export(List<T> list,String a) throws RowsExceededException, WriteException, IOException {
 		WritableWorkbook wwb =null;
         try {
-            wwb = Workbook.createWorkbook(create_file_excel.createFileWithCurDate(new File("C:\\Users\\Lenovo\\Desktop\\export.xls")));
+            wwb = Workbook.createWorkbook(create_file_excel.createFileWithCurDate(new File("E:\\Book\\export_excel\\export.xls")));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -225,6 +226,81 @@ public class Export_excel {
 				if(f[1])
 					sheet.addCell(new Label(n++,i+1,l.get(i).getType_name()));
 				
+			}
+			wwb.write();
+            wwb.close();
+		}
+		else if(list.get(0) instanceof Register_Users) {
+			List<Register_Users> l=(List<Register_Users>)list;
+			boolean[] f=new boolean[12];
+			for(int i=0;i<f.length;i++) {
+				f[i]=false;
+			}
+			for(int i=0;i<l.size();i++) {
+				if(l.get(i).getR_id()!=null) f[0]=true;
+				if(l.get(i).getU_id()!=null) f[1]=true;
+				if(l.get(i).getU_name()!=null) f[2]=true;
+				if(l.get(i).getU_sex()!=null) f[3]=true;
+				if(l.get(i).getU_age()!=null) f[4]=true;
+				if(l.get(i).getU_major()!=null) f[5]=true;
+				if(l.get(i).getU_tel()!=null) f[6]=true;
+				if(l.get(i).getR_email()!=null) f[7]=true;
+				if(l.get(i).getU_email()!=null) f[8]=true;
+				if(l.get(i).getU_hasb()!=null) f[9]=true;
+				if(l.get(i).getU_createDay()!=null) f[10]=true;
+				if(l.get(i).getR_password()!=null) f[11]=true;
+			}
+			int k=0;
+			if(f[0]||f[1])
+				sheet.addCell(new Label(k++,0,"用户号"));
+			if(f[11])
+				sheet.addCell(new Label(k++,0,"用户密码"));
+			if(f[2])
+				sheet.addCell(new Label(k++,0,"用户姓名"));
+			if(f[3])
+				sheet.addCell(new Label(k++,0,"用户性别"));
+			if(f[4])
+				sheet.addCell(new Label(k++,0,"用户年龄"));
+			if(f[5])
+				sheet.addCell(new Label(k++,0,"专业"));
+			if(f[6])
+				sheet.addCell(new Label(k++,0,"联系电话"));
+			if(f[7]||f[8])
+				sheet.addCell(new Label(k++,0,"电子邮箱"));
+			if(f[9])
+				sheet.addCell(new Label(k++,0,"已借阅书籍数"));
+			if(f[10])
+				sheet.addCell(new Label(k++,0,"用户创建日期"));
+			for(int i=0;i<l.size();i++) {
+				int n=0;
+				if(f[0]||f[1]) {
+					if(f[0])
+						sheet.addCell(new Label(n++,i,l.get(i).getR_id()));
+					if(f[1])
+						sheet.addCell(new Label(n++,i,l.get(i).getU_id()));
+				}
+				if(f[11])
+					sheet.addCell(new Label(n++,i,l.get(i).getR_password()));
+				if(f[2])
+					sheet.addCell(new Label(n++,i,l.get(i).getU_name()));
+				if(f[3])
+					sheet.addCell(new Label(n++,i,l.get(i).getU_sex()));
+				if(f[4])
+					sheet.addCell(new Label(n++,i,l.get(i).getU_age().toString()));
+				if(f[5])
+					sheet.addCell(new Label(n++,i,l.get(i).getU_major()));
+				if(f[6])
+					sheet.addCell(new Label(n++,i,l.get(i).getU_tel()));
+				if(f[7]||f[8]) {
+					if(f[7])
+						sheet.addCell(new Label(n++,i,l.get(i).getR_email()));
+					if(f[8])
+						sheet.addCell(new Label(n++,i,l.get(i).getU_email()));
+					}
+				if(f[9])
+					sheet.addCell(new Label(n++,i,l.get(i).getU_hasb().toString()));
+				if(f[10])
+					sheet.addCell(new Label(n++,i,l.get(i).getU_createDay().toString()));
 			}
 			wwb.write();
             wwb.close();

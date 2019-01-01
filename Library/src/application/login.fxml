@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane pickOnBounds="false" prefHeight="485.0" prefWidth="771.0" style="-fx-background-radius: 3em;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.LoginController">
+   <children>
+      <AnchorPane prefHeight="485.0" prefWidth="771.0" style="-fx-background-color: #3d4956; -fx-background-radius: 2em;">
+         <children>
+            <ImageView fitHeight="183.0" fitWidth="771.0" pickOnBounds="true">
+               <image>
+                  <Image url="@imags/school2.png" />
+               </image>
+            </ImageView>
+            <TextField fx:id="textField" layoutX="525.0" layoutY="250.0" style="-fx-background-color: #515d6d;" />
+            <Text fill="#f5f5f5" layoutX="435.0" layoutY="272.0" strokeType="OUTSIDE" strokeWidth="0.0" text="用户：" wrappingWidth="59.26025390625">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text fill="#fcfcfc" layoutX="432.0" layoutY="337.0" strokeType="OUTSIDE" strokeWidth="0.0" text="密码：" wrappingWidth="59.26025390625">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Button fx:id="registerButton" layoutX="427.0" layoutY="407.0" maxHeight="35.0" maxWidth="-Infinity" mnemonicParsing="false" onAction="#registerButtonClicked" prefHeight="35.0" prefWidth="130.0" style="-fx-background-radius: 5em; -fx-background-color: b1b1b1; -fx-font-size: 20;" text="注册">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Button>
+            <Button fx:id="loginButton" layoutX="613.0" layoutY="407.0" maxHeight="35.0" maxWidth="-Infinity" mnemonicParsing="false" onAction="#loginButtonClicked" prefHeight="35.0" prefWidth="130.0" style="-fx-background-radius: 5em; -fx-background-color: b1b1b1; -fx-font-size: 20;" text="登录">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Button>
+            <ImageView blendMode="MULTIPLY" fitHeight="319.0" fitWidth="506.0" layoutX="-71.0" layoutY="156.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@imags/font.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="exitButton" layoutX="27.0" layoutY="407.0" maxHeight="35.0" maxWidth="-Infinity" mnemonicParsing="false" onAction="#exitButtonClicked" prefHeight="35.0" prefWidth="130.0" style="-fx-background-radius: 5em; -fx-font-size: 20; -fx-background-color: #515d6d;" text="退出" textFill="WHITE">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Button>
+            <PasswordField fx:id="passwordField" layoutX="525.0" layoutY="315.0" style="-fx-background-color: #515d6d;" />
+         </children></AnchorPane>
+   </children>
+</AnchorPane>

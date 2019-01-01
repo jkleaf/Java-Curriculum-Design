@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="706.0" prefWidth="1413.0" style="-fx-background-radius: 2em;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.menuController">
+   <children>
+      <AnchorPane fx:id="mid" layoutX="272.0" prefHeight="706.0" prefWidth="898.0" style="-fx-background-color: #3d4956;">
+         <children>
+            <TableView fx:id="table" layoutX="3.0" layoutY="164.0" prefHeight="542.0" prefWidth="901.0" style="-fx-background-color: #515d6d;">
+              <columns>
+                <TableColumn fx:id="b_id" prefWidth="89.0" text="书籍编号" />
+                <TableColumn fx:id="b_name" prefWidth="137.0" text="书名" />
+                  <TableColumn fx:id="pub" prefWidth="143.0" text="出版社" />
+                  <TableColumn fx:id="p_date" prefWidth="170.0" text="出版日期" />
+                  <TableColumn fx:id="b_type" prefWidth="223.0" text="书籍类型编号" />
+                  <TableColumn fx:id="b_type1" prefWidth="132.0" text="当前数量" />
+              </columns>
+            </TableView>
+            <TextField fx:id="text1" layoutX="169.0" layoutY="64.0" prefHeight="40.0" prefWidth="408.0" promptText="请输入您要查找的书籍编号或名称或出版社或类型" style="-fx-background-color: #515d6d;" />
+            <Button fx:id="searchButton" layoutX="688.0" layoutY="58.0" mnemonicParsing="false" onAction="#searchButtonClicked" prefHeight="52.0" prefWidth="138.0" style="-fx-background-radius: 5em; -fx-background-color: #515d6d;" stylesheets="@application.css" text="   搜索" textFill="#fcfcfc" />
+            <ImageView fitHeight="28.0" fitWidth="40.0" layoutX="707.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@imags/放大镜3.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="musicImg" fitHeight="79.0" fitWidth="75.0" layoutX="826.0" onMouseClicked="#playMusic" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@imags/音乐.png" />
+               </image>
+            </ImageView>
+            <Separator layoutX="-10.0" layoutY="45.0" prefWidth="200.0" rotate="-26.6" />
+            <Separator layoutX="-12.0" layoutY="39.0" prefHeight="35.0" prefWidth="285.0" rotate="-24.0" />
+            <Button fx:id="exportExcel" layoutX="762.0" layoutY="117.0" mnemonicParsing="false" onAction="#exportExcelButtonClicked" prefHeight="36.0" prefWidth="129.0" style="-fx-font-weight: bold; -fx-font-size: 15pt; -fx-background-color: #b1b1b1;" text="导出表格">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <Button fx:id="clearButton" layoutX="14.0" layoutY="117.0" mnemonicParsing="false" onAction="#clearButtonClicked" prefHeight="36.0" prefWidth="129.0" style="-fx-background-color: #b1b1b1; -fx-font-size: 15pt; -fx-font-weight: bold;" text="清空表格">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <ComboBox fx:id="comboBox" layoutX="588.0" layoutY="64.0" prefHeight="40.0" prefWidth="90.0" style="-fx-background-color: #b1b1b1;" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="main" prefHeight="676.0" prefWidth="257.0" style="-fx-background-color: #3d4956; -fx-background-radius: 2em;">
+         <children>
+            <Button fx:id="firstButton" layoutY="136.0" mnemonicParsing="false" onMouseClicked="#changestage" prefHeight="110.0" prefWidth="257.0" style="-fx-background-radius: 2em; -fx-border-radius: 5em; -fx-background-color: #CCCC;" styleClass="leftButton" stylesheets="@application.css" text="     图书查询">
+               <font>
+                  <Font size="35.0" />
+               </font>
+            </Button>
+            <Button fx:id="thirdButton" layoutY="366.0" mnemonicParsing="false" onMouseClicked="#changestage" prefHeight="110.0" prefWidth="257.0" style="-fx-background-radius: 2em; -fx-background-color: #515d6d;" styleClass="leftButton" stylesheets="@application.css" text="     图书归还" textFill="#eeeeee">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Button>
+            <Button fx:id="secondButton" layoutY="253.0" mnemonicParsing="false" onMouseClicked="#changestage" prefHeight="110.0" prefWidth="257.0" style="-fx-background-radius: 2em; -fx-background-color: #515d6d;" styleClass="leftButton" stylesheets="@application.css" text="     图书借阅" textFill="#fcf7f7">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Button>
+            <Button fx:id="forthButton" layoutY="481.0" mnemonicParsing="false" onMouseClicked="#changestage" prefHeight="110.0" prefWidth="257.0" style="-fx-background-radius: 2em; -fx-background-color: #515d6d;" styleClass="leftButton" stylesheets="@application.css" text="     权限获取" textFill="#f8f8f8">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Button>
+            <Button fx:id="fifthButton" layoutY="596.0" mnemonicParsing="false" onMouseClicked="#changestage" prefHeight="110.0" prefWidth="257.0" style="-fx-background-radius: 2em; -fx-background-color: #515d6d;" styleClass="leftButton" stylesheets="@application.css" text="     退出系统" textFill="WHITESMOKE">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Button>
+            <ImageView fitHeight="36.0" fitWidth="50.0" layoutX="20.0" layoutY="173.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@imags/查阅书籍.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="79.0" fitWidth="61.0" layoutX="14.0" layoutY="621.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@imags/电源.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="79.0" fitWidth="61.0" layoutX="14.0" layoutY="503.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@imags/权限3.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="52.0" fitWidth="50.0" layoutX="25.0" layoutY="390.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@imags/课本.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="61.0" fitWidth="61.0" layoutX="14.0" layoutY="267.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@imags/课本2.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="music2" fitHeight="79.0" fitWidth="61.0" layoutX="45.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@imags/用户1.png" />
+               </image>
+            </ImageView>
+            <Text fill="#f5f3f3" layoutX="116.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="账号：" />
+            <Text fill="#f5f5f5" layoutX="116.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="姓名：" />
+            <ImageView fx:id="left1" blendMode="HARD_LIGHT" fitHeight="40.0" fitWidth="40.0" layoutX="217.0" layoutY="172.0" pickOnBounds="true" rotate="-180.8" visible="false">
+               <image>
+                  <Image url="@imags/右箭头.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="left2" blendMode="HARD_LIGHT" fitHeight="40.0" fitWidth="40.0" layoutX="217.0" layoutY="288.0" pickOnBounds="true" preserveRatio="true" rotate="180.0" visible="false">
+               <image>
+                  <Image url="@imags/右箭头.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="left3" blendMode="HARD_LIGHT" fitHeight="40.0" fitWidth="40.0" layoutX="217.0" layoutY="403.0" pickOnBounds="true" preserveRatio="true" rotate="180.0" visible="false">
+               <image>
+                  <Image url="@imags/右箭头.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="left4" blendMode="HARD_LIGHT" fitHeight="40.0" fitWidth="40.0" layoutX="217.0" layoutY="518.0" pickOnBounds="true" preserveRatio="true" rotate="180.0" visible="false">
+               <image>
+                  <Image url="@imags/右箭头.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="left5" blendMode="HARD_LIGHT" fitHeight="40.0" fitWidth="40.0" layoutX="217.0" layoutY="633.0" pickOnBounds="true" preserveRatio="true" rotate="180.0" visible="false">
+               <image>
+                  <Image url="@imags/右箭头.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="timeLable" layoutX="45.0" layoutY="7.0" prefHeight="40.0" prefWidth="218.0" textFill="WHITE">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
+            <Label fx:id="userIdLabel" layoutX="157.0" layoutY="59.0" prefHeight="20.0" prefWidth="90.0" textFill="WHITE" />
+            <Label fx:id="usernameLabel" layoutX="157.0" layoutY="98.0" prefHeight="20.0" prefWidth="90.0" textFill="WHITE" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="two_two" layoutX="1192.0" prefHeight="706.0" prefWidth="333.0" style="-fx-background-color: #3d4956; -fx-background-radius: 2em;" visible="false">
+         <children>
+            <Text fill="#f2f2f2" layoutX="24.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="借阅书籍：" wrappingWidth="100.0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <TextField fx:id="txtBorName" editable="false" layoutX="135.0" layoutY="159.0" prefHeight="30.0" prefWidth="180.0" promptText="显示书名" style="-fx-background-color: #515d6d;" />
+            <Text fill="#f2f2f2" layoutX="24.0" layoutY="401.0" strokeType="OUTSIDE" strokeWidth="0.0" text="借阅密码：" wrappingWidth="100.0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <Text fill="#f2f2f2" layoutX="24.0" layoutY="252.0" strokeType="OUTSIDE" strokeWidth="0.0" text="用户编号：" wrappingWidth="100.0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <Text fill="#f2f2f2" layoutX="24.0" layoutY="317.0" strokeType="OUTSIDE" strokeWidth="0.0" text="借阅日期：" wrappingWidth="100.0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <TextField fx:id="txtCurTime" editable="false" layoutX="135.0" layoutY="295.0" prefHeight="30.0" prefWidth="180.0" promptText="显示当前日期" style="-fx-background-color: #515d6d;" />
+            <TextField fx:id="txtUserPsw" layoutX="135.0" layoutY="379.0" prefHeight="30.0" prefWidth="180.0" promptText="请输入用户密码" style="-fx-background-color: #515d6d;" />
+            <TextField fx:id="txtUserId" editable="false" layoutX="135.0" layoutY="229.0" prefHeight="30.0" prefWidth="180.0" promptText="显示用户编号" style="-fx-background-color: #515d6d;" />
+            <Button fx:id="two_two_one" layoutX="34.0" layoutY="496.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="90.0" style="-fx-background-radius: 2em;-fx-font-size: 20;" text="取消" />
+            <Button fx:id="borrowButton" layoutX="190.0" layoutY="496.0" mnemonicParsing="false" onAction="#borrowButtonClicked" prefHeight="36.0" prefWidth="90.0" style="-fx-background-radius: 2em;-fx-font-size: 20;" text="借阅" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="one_one" layoutX="1192.0" prefHeight="706.0" prefWidth="333.0" style="-fx-background-color: #3d4956; -fx-background-radius: 2em;">
+         <children>
+            <Text fill="WHITE" layoutX="37.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="书籍编号：">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" layoutX="37.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" text="书籍名称：">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" layoutX="37.0" layoutY="655.0" strokeType="OUTSIDE" strokeWidth="0.0" text="书籍状态：">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" layoutX="27.0" layoutY="187.0" strokeType="OUTSIDE" strokeWidth="0.0" text="书籍出版社：">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" layoutX="37.0" layoutY="232.0" strokeType="OUTSIDE" strokeWidth="0.0" text="书籍分类：">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" layoutX="37.0" layoutY="322.0" strokeType="OUTSIDE" strokeWidth="0.0" text="书籍简介：">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <TextField fx:id="textB_id" editable="false" layoutX="151.0" layoutY="67.0" prefHeight="28.0" prefWidth="144.0" style="-fx-background-color: #515d6d; -fx-font-color: white;" />
+            <TextField fx:id="textB_name" editable="false" layoutX="151.0" layoutY="116.0" prefHeight="28.0" prefWidth="144.0" style="-fx-background-color: #515d6d;" />
+            <TextField fx:id="textPub" editable="false" layoutX="151.0" layoutY="165.0" prefHeight="28.0" prefWidth="144.0" style="-fx-background-color: #515d6d;" />
+            <TextField fx:id="textB_type" editable="false" layoutX="151.0" layoutY="211.0" prefHeight="28.0" prefWidth="144.0" style="-fx-background-color: #515d6d;" />
+            <TextField fx:id="textB_status" editable="false" layoutX="151.0" layoutY="633.0" prefHeight="28.0" prefWidth="144.0" style="-fx-background-color: #515d6d;" />
+            <TextArea fx:id="textB_Content" editable="false" layoutX="46.0" layoutY="336.0" opacity="0.25" prefHeight="274.0" prefWidth="257.0" style="-fx-background-color: #515d6d;" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="three_three" layoutX="1192.0" prefHeight="706.0" prefWidth="333.0" style="-fx-background-color: #3d4956; -fx-background-radius: 2em;" visible="false">
+         <children>
+            <Text fill="WHITE" layoutX="27.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="书籍编号：">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <TextField fx:id="txtRetBId" editable="false" layoutX="153.0" layoutY="113.0" prefHeight="28.0" prefWidth="144.0" promptText="显示书籍编号" style="-fx-background-color: #515d6d;" />
+            <Text fill="WHITE" layoutX="27.0" layoutY="217.0" strokeType="OUTSIDE" strokeWidth="0.0" text="借阅日期：">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <TextField fx:id="txtBorDate" editable="false" layoutX="153.0" layoutY="195.0" prefHeight="28.0" prefWidth="144.0" promptText="显示借阅日期" style="-fx-background-color: #515d6d;" />
+            <Text fill="WHITE" layoutX="27.0" layoutY="296.0" strokeType="OUTSIDE" strokeWidth="0.0" text="已借天数：">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <TextField fx:id="txtBorDays" editable="false" layoutX="153.0" layoutY="273.0" prefHeight="28.0" prefWidth="144.0" promptText="借阅至当天总天数" style="-fx-background-color: #515d6d;" />
+            <Text fill="WHITE" layoutX="27.0" layoutY="373.0" strokeType="OUTSIDE" strokeWidth="0.0" text="借阅密码：">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <TextField fx:id="txtBorPsw" layoutX="153.0" layoutY="351.0" prefHeight="28.0" prefWidth="144.0" promptText="用户借阅密码" style="-fx-background-color: #515d6d;" />
+            <Button fx:id="returnButton" layoutX="200.0" layoutY="506.0" mnemonicParsing="false" onAction="#returnButtonClicked" prefHeight="36.0" prefWidth="90.0" style="-fx-background-radius: 2em;-fx-font-size: 20;" text="还书" />
+            <Button fx:id="two_two_one111" layoutX="37.0" layoutY="506.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="90.0" style="-fx-background-radius: 2em;-fx-font-size: 20;" text="取消" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="four_four" layoutX="1192.0" prefHeight="706.0" prefWidth="333.0" style="-fx-background-color: #3d4956; -fx-background-radius: 2em;">
+         <children>
+            <TextField fx:id="adId" layoutX="159.0" layoutY="216.0" prefHeight="28.0" prefWidth="129.0" promptText="请输入管理员编号" style="-fx-background-color: #515d6d;" />
+            <TextField fx:id="adPsw" layoutX="159.0" layoutY="304.0" prefHeight="28.0" prefWidth="129.0" promptText="请输入管理员密码" style="-fx-background-color: #515d6d;" />
+            <Label layoutX="36.0" layoutY="217.0" text="管理员：" textFill="WHITE">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="46.0" layoutY="305.0" text="密码：" textFill="WHITE">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Button fx:id="loginAdButton" layoutX="190.0" layoutY="499.0" mnemonicParsing="false" onAction="#adLoginButtonClicked" prefHeight="36.0" prefWidth="129.0" style="-fx-background-radius: 5em; -fx-background-color: #b1b1b1;" text="登入">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <Button fx:id="cancelAdButton" layoutX="21.0" layoutY="499.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="129.0" style="-fx-background-radius: 5em; -fx-background-color: #515d6d;" text="取消" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

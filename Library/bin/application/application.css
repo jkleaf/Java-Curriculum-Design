@@ -1,12 +1,19 @@
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
-
-.searchButton:hover{
-	-fx-background-color: blue;
+.button {
+   -fx-font-weight: bold;
+   -fx-font-size: 15pt;
+   -fx-background-color:rgb(211,211,211);
 }
-
-.searchButton:pressed{
-	-fx-background-color: red;
+.button:hover{
+   -fx-font-size: 25pt;
 }
-.searchButton:selected{
-	-fx-background-color: yellow;
+.leftButton :hover {
+   -fx-background-color:#d3d3d3;
 }
+/* ÎÞÐ§
+.button :clicked {
+   -fx-font-family: "Î¢ÈíÑÅºÚ";
+   -fx-font-size: 25pt;
+   -fx-background-color:brown ;
+}
+*/
