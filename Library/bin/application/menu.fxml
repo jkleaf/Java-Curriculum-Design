@@ -16,15 +16,14 @@
          <children>
             <TableView fx:id="table" layoutX="3.0" layoutY="164.0" prefHeight="542.0" prefWidth="901.0" style="-fx-background-color: #515d6d;">
               <columns>
-                <TableColumn fx:id="b_id" prefWidth="89.0" text="书籍编号" />
-                <TableColumn fx:id="b_name" prefWidth="137.0" text="书名" />
-                  <TableColumn fx:id="pub" prefWidth="143.0" text="出版社" />
-                  <TableColumn fx:id="p_date" prefWidth="170.0" text="出版日期" />
-                  <TableColumn fx:id="b_type" prefWidth="223.0" text="书籍类型编号" />
-                  <TableColumn fx:id="b_type1" prefWidth="132.0" text="当前数量" />
+                <TableColumn fx:id="b_id" prefWidth="103.0" text="书籍编号" />
+                <TableColumn fx:id="b_name" prefWidth="173.0" text="书名" />
+                  <TableColumn fx:id="pub" prefWidth="195.0" text="出版社" />
+                  <TableColumn fx:id="p_date" prefWidth="201.0" text="出版日期" />
+                  <TableColumn fx:id="type_name" prefWidth="228.0" text="书籍类型" />
               </columns>
             </TableView>
-            <TextField fx:id="text1" layoutX="169.0" layoutY="64.0" prefHeight="40.0" prefWidth="408.0" promptText="请输入您要查找的书籍编号或名称或出版社或类型" style="-fx-background-color: #515d6d;" />
+            <TextField fx:id="txtSearch" layoutX="143.0" layoutY="64.0" prefHeight="40.0" prefWidth="408.0" promptText="请输入您要查找的书籍编号或名称或出版社或类型" style="-fx-background-color: #515d6d;" />
             <Button fx:id="searchButton" layoutX="688.0" layoutY="58.0" mnemonicParsing="false" onAction="#searchButtonClicked" prefHeight="52.0" prefWidth="138.0" style="-fx-background-radius: 5em; -fx-background-color: #515d6d;" stylesheets="@application.css" text="   搜索" textFill="#fcfcfc" />
             <ImageView fitHeight="28.0" fitWidth="40.0" layoutX="707.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -48,7 +47,7 @@
                   <Font size="16.0" />
                </font>
             </Button>
-            <ComboBox fx:id="comboBox" layoutX="588.0" layoutY="64.0" prefHeight="40.0" prefWidth="90.0" style="-fx-background-color: #b1b1b1;" />
+            <ComboBox fx:id="comboBox" layoutX="558.0" layoutY="64.0" prefHeight="40.0" prefWidth="120.0" style="-fx-background-color: #b1b1b1;" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="main" prefHeight="676.0" prefWidth="257.0" style="-fx-background-color: #3d4956; -fx-background-radius: 2em;">
@@ -244,7 +243,7 @@
             <Button fx:id="two_two_one111" layoutX="37.0" layoutY="506.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="90.0" style="-fx-background-radius: 2em;-fx-font-size: 20;" text="取消" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="four_four" layoutX="1192.0" prefHeight="706.0" prefWidth="333.0" style="-fx-background-color: #3d4956; -fx-background-radius: 2em;">
+      <AnchorPane fx:id="four_four" layoutX="1192.0" prefHeight="706.0" prefWidth="333.0" style="-fx-background-color: #3d4956; -fx-background-radius: 2em;" visible="false">
          <children>
             <TextField fx:id="adId" layoutX="159.0" layoutY="216.0" prefHeight="28.0" prefWidth="129.0" promptText="请输入管理员编号" style="-fx-background-color: #515d6d;" />
             <TextField fx:id="adPsw" layoutX="159.0" layoutY="304.0" prefHeight="28.0" prefWidth="129.0" promptText="请输入管理员密码" style="-fx-background-color: #515d6d;" />

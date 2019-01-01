@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import org.core.MySQLQuery;
+import org.join.BookAndTypes;
 import org.po.Book;
 import org.po.Borrow_table;
 import org.po.Register;
@@ -42,8 +43,6 @@ import javafx.scene.input.MouseEvent;
 public class menuController implements Initializable{
 	@FXML
 	private AnchorPane mid;
-	@FXML
-	private TextField text1;
 	@FXML
 	private Button searchButton;
 	@FXML
@@ -110,26 +109,29 @@ public class menuController implements Initializable{
 	@FXML private TextField txtBorDate;
 	@FXML private TextField txtBorDays;
 	@FXML private TextField txtBorPsw;
+	@FXML private TextField txtSearch;
 	
 	
-	@FXML private TableView<Book> table;
-	@FXML private TableColumn<Book,String> b_id;
-	@FXML private TableColumn<Book,String> b_name;
-	@FXML private TableColumn<Book,String> pub;
-	@FXML private TableColumn<Book,Date> p_date;
-	@FXML private TableColumn<Book,Integer> b_type;
+	@FXML private TableView<BookAndTypes> table;
+	@FXML private TableColumn<BookAndTypes,String> b_id;
+	@FXML private TableColumn<BookAndTypes,String> b_name;
+	@FXML private TableColumn<BookAndTypes,String> pub;
+	@FXML private TableColumn<BookAndTypes,Date> p_date;
+	@FXML private TableColumn<BookAndTypes,String> type_name;
 	
 	@FXML private Button clearButton;
-	@FXML private ComboBox<String> comboBox=new ComboBox<>(
-			FXCollections.observableArrayList("书籍编号","书名","出版社","书籍类型"));	
+	@FXML private ComboBox<String> comboBox;
 	
-//	@FXML private ChoiceBox<String> choiceBox=new ChoiceBox<>(
-//			FXCollections.observableArrayList("书籍编号","书名","出版社","书籍类型"));
-	private List<Book> listBean;
-	private ObservableList<Book> bookSelected;
+//	@FXML private ChoiceBox<String> choiceBox;
+			
+	private List<BookAndTypes> listBean;
+	private ObservableList<BookAndTypes> bookSelected;
 	
 	private String userID=LoginController.userID;
 	private String userName=LoginController.username;
+	private int selectedIndex;
+	private String searchSql[];
+	public static String adminID;
 //	private boolean isReturn,isBorrow;
 	
 	@FXML
@@ -190,13 +192,18 @@ public class menuController implements Initializable{
 		textB_Content.setWrapText(true);
 		timeLable.setText(Greeting.say_hi());
 		table.getSelectionModel().getSelectedItems().addListener(listener);
+		comboBox.setItems(FXCollections.observableArrayList("所有","书籍编号","书名","出版社","书籍类型"));
 		comboBox.getSelectionModel().select(0);
-//		comboBox.getSelectionModel().selectedItemProperty().addListener(clistener);
-//		choiceBox.getSelectionModel().selectedItemProperty().addListener(listener);
+		comboBox.getSelectionModel().selectedIndexProperty().addListener(clistener);
+//		String sql="select b_id,b_name,pub,p_date,type_name from book,types where book.b_type=types.type";
+		String sql="select * from book,types where book.b_type=types.type";
+		String sql1=sql+" and ";
+		String sql2=" like  \"%\"?\"%\" ";
+		searchSql=new String[]{sql,sql1+"b_id"+sql2,sql1+"b_name"+sql2,sql1+"pub"+sql2,sql1+"type_name"+sql2};
 	}
-	ListChangeListener<Book> listener=new ListChangeListener<Book>(){
+	ListChangeListener<BookAndTypes> listener=new ListChangeListener<BookAndTypes>(){
 		@Override
-		public void onChanged(javafx.collections.ListChangeListener.Change<? extends Book> c) {
+		public void onChanged(javafx.collections.ListChangeListener.Change<? extends BookAndTypes> c) {
 			if(table!=null){
 				bookSelected=table.getSelectionModel().getSelectedItems();
 //				table.setStyle("-fx-background-color:#737675");
@@ -205,7 +212,7 @@ public class menuController implements Initializable{
 					textB_id.setText(bookSelected.get(0).getB_id());
 					textB_name.setText(bookSelected.get(0).getB_name());
 					textPub.setText(bookSelected.get(0).getPub().toString());
-					textB_type.setText(bookSelected.get(0).getB_type().toString());
+					textB_type.setText(bookSelected.get(0).getType_name());
 					textB_Content.setText(bookSelected.get(0).getContent());
 					txtBorName.setText(bookSelected.get(0).getB_name());
 					List<Integer> list=HandleDate.getLocalTime();
@@ -218,19 +225,48 @@ public class menuController implements Initializable{
 		}	
 	};
 	
-	ChangeListener<Book> clistener=new ChangeListener<Book>() {
+	ChangeListener<Number> clistener=new ChangeListener<Number>() {
 
 		@Override
-		public void changed(ObservableValue<? extends Book> observable, Book oldValue, Book newValue) {
-			
+		public void changed(ObservableValue ov, Number value, Number new_value) {
+			switch ((int)new_value) {
+			case 0:
+				selectedIndex=0;
+					break;
+			case 1:
+				selectedIndex=1;
+					break;
+			case 2:
+				selectedIndex=2;
+					break;
+			case 3:
+				selectedIndex=3;
+					break;
+			case 4:
+				selectedIndex=4;
+					break;
+			}
 		}
 	};
 	
-	
 	@SuppressWarnings("unchecked")
+	public List<BookAndTypes> getListBean(String sql,Object[] objects){
+		return new MySQLQuery().queryRows(sql, BookAndTypes.class, objects);
+	}
+	
 	public void searchButtonClicked(ActionEvent event){
-		listBean=new MySQLQuery().queryRows("select *from book", Book.class, null);
-		ObservableList<Book> list=FXCollections.observableArrayList(
+		if(txtSearch!=null&&txtSearch.getText().equals("")){
+			return;
+		}	
+		listBean=getListBean(searchSql[selectedIndex],
+				selectedIndex==0?null:new Object[]{txtSearch.getText()});
+//		listBean=new MySQLQuery().queryRows("select *from book", Book.class, null);
+		if(listBean==null||listBean.isEmpty()){
+			DialogDisplay.msgDialog("消息提示", "查询没有结果");
+			table.getItems().clear();
+			return;
+		}
+		ObservableList<BookAndTypes> oblist=FXCollections.observableArrayList(
 				listBean);
 //		for (Book book : list) {
 //			System.out.println(book.getB_id()+" "+book.getB_name()+" "+book.getPub()+" "+book.getP_date()+" "+book.getB_type());		
@@ -239,8 +275,9 @@ public class menuController implements Initializable{
 		b_name.setCellValueFactory(new PropertyValueFactory<>("b_name"));
 		pub.setCellValueFactory(new PropertyValueFactory<>("pub"));
 		p_date.setCellValueFactory(new PropertyValueFactory<>("p_date"));
-		b_type.setCellValueFactory(new PropertyValueFactory<>("b_type"));
-		table.setItems(list);
+		type_name.setCellValueFactory(new PropertyValueFactory<>("type_name"));
+		table.getItems().clear();
+		table.setItems(oblist);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -279,6 +316,7 @@ public class menuController implements Initializable{
 	
 	public void adLoginButtonClicked(ActionEvent event) throws IOException{
 		if(LoginModel.adminIslogin(adId.getText(), adPsw.getText())){
+			adminID=adId.getText();
 			System.out.println("successfully login!");
 			new PanelJump().Jump2NewPanel(event, true, "admin.fxml");
 		}else{
@@ -336,6 +374,7 @@ public class menuController implements Initializable{
 						+" where u_id=?",Borrow_table.class, new Object[]{userID});
 				String bId=list.get(0).getB_id();
 				if(list==null||list.isEmpty()||!bId.equals(txtRetBId.getText())){
+					txtBorPsw.setText("");
 					DialogDisplay.errorDialog("错误", "您未借阅该书!");
 					return;
 				}else{
@@ -357,11 +396,6 @@ public class menuController implements Initializable{
 				return;
 			}
 		}
-//		if(txtRetBId.getText().equals("")||.equals("")||txtUserId.equals("")){
-//			DialogDisplay.msgDialog("消息提示", "请选择要借阅的书本!");
-//			return;
-//		}
-		
 	}
 
 }

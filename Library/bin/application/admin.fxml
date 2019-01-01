@@ -13,8 +13,13 @@
          <children>
             <TableView fx:id="bookTableView" layoutX="2.0" layoutY="214.0" prefHeight="493.0" prefWidth="1146.0" style="-fx-background-color: #515d6d; -fx-background-radius: 2em;">
               <columns>
-                <TableColumn prefWidth="75.0" text="图书编号" />
-                <TableColumn prefWidth="75.0" text="C2" />
+                <TableColumn prefWidth="94.0" text="书籍编号" />
+                <TableColumn prefWidth="137.0" text="书籍名称" />
+                  <TableColumn prefWidth="163.0" text="出版社" />
+                  <TableColumn prefWidth="151.0" text="出版日期" />
+                  <TableColumn prefWidth="111.0" text="书籍类型编号" />
+                  <TableColumn prefWidth="221.0" text="书籍类型" />
+                  <TableColumn prefWidth="268.0" text="书籍简介" />
               </columns>
             </TableView>
             <TextField fx:id="searchTexFiled" layoutX="570.0" layoutY="169.0" prefHeight="28.0" prefWidth="402.0" promptText="请输入您要查找的书籍编号或名称" style="-fx-background-color: #515d6d;" />
@@ -50,22 +55,22 @@
                </font>
             </Text>
             <DatePicker fx:id="bookDataPicker" layoutX="109.0" layoutY="142.0" prefHeight="30.0" prefWidth="144.0" style="-fx-background-color: #515d6d;" />
-            <Button fx:id="updateInfoButton" layoutX="727.0" layoutY="95.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="129.0" style="-fx-font-size: 16; -fx-background-radius: 2em;" stylesheets="@../../../../../Desktop/Library%20-%20副本/src/application/application.css" text="更新信息">
+            <Button fx:id="updateInfoButton" layoutX="727.0" layoutY="95.0" mnemonicParsing="false" onAction="#updateUserButtonClicked" prefHeight="27.0" prefWidth="129.0" style="-fx-font-size: 16; -fx-background-radius: 2em;" stylesheets="@../../../../../Desktop/Library%20-%20副本/src/application/application.css" text="更新信息">
                <font>
                   <Font size="20.0" />
                </font>
             </Button>
-            <Button fx:id="deletUserButton" layoutX="869.0" layoutY="28.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="129.0" style="-fx-font-size: 16; -fx-background-radius: 2em;" stylesheets="@../../../../../Desktop/Library%20-%20副本/src/application/application.css" text="删除用户">
+            <Button fx:id="deletUserButton" layoutX="727.0" layoutY="30.0" mnemonicParsing="false" onAction="#delUserButtonClicked" prefHeight="27.0" prefWidth="129.0" style="-fx-font-size: 16; -fx-background-radius: 2em;" stylesheets="@../../../../../Desktop/Library%20-%20副本/src/application/application.css" text="删除用户">
                <font>
                   <Font size="20.0" />
                </font>
             </Button>
-            <Button fx:id="deletBookButton" layoutX="578.0" layoutY="96.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="129.0" style="-fx-font-size: 16; -fx-background-radius: 2em;" stylesheets="@../../../../../Desktop/Library%20-%20副本/src/application/application.css" text="下架图书">
+            <Button fx:id="deletBookButton" layoutX="578.0" layoutY="96.0" mnemonicParsing="false" onAction="#delBookButtonClicked" prefHeight="27.0" prefWidth="129.0" style="-fx-font-size: 16; -fx-background-radius: 2em;" stylesheets="@../../../../../Desktop/Library%20-%20副本/src/application/application.css" text="下架图书">
                <font>
                   <Font size="20.0" />
                </font>
             </Button>
-            <Button fx:id="addBookButton" layoutX="578.0" layoutY="28.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="129.0" style="-fx-font-size: 16; -fx-background-radius: 2em;" stylesheets="@../../../../../Desktop/Library%20-%20副本/src/application/application.css" text="上架图书">
+            <Button fx:id="addBookButton" layoutX="578.0" layoutY="28.0" mnemonicParsing="false" onAction="#addBookButtonClicked" prefHeight="27.0" prefWidth="129.0" style="-fx-font-size: 16; -fx-background-radius: 2em;" stylesheets="@../../../../../Desktop/Library%20-%20副本/src/application/application.css" text="上架图书">
                <font>
                   <Font size="20.0" />
                </font>
@@ -75,38 +80,54 @@
                   <Font size="16.0" />
                </font>
             </Text>
-            <Button fx:id="addTextButton" layoutX="727.0" layoutY="27.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="129.0" style="-fx-font-size: 16; -fx-background-radius: 2em;" stylesheets="@../../../../../Desktop/Library%20-%20副本/src/application/application.css" text="添加简介">
+            <Button fx:id="addTextButton" layoutX="277.0" layoutY="140.0" mnemonicParsing="false" onAction="#addContentClicked" prefHeight="27.0" prefWidth="100.0" style="-fx-font-size: 16;" stylesheets="@application.css" text="添加简介...">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <Button fx:id="exportExcelButton" layoutX="869.0" layoutY="96.0" mnemonicParsing="false" onAction="#exportExcelButtonClicked" prefHeight="27.0" prefWidth="129.0" style="-fx-font-size: 16; -fx-background-radius: 2em;" stylesheets="@../../../../../Desktop/Library%20-%20副本/src/application/application.css" text="导出表格">
                <font>
                   <Font size="20.0" />
                </font>
             </Button>
-            <Button layoutX="869.0" layoutY="96.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="129.0" style="-fx-font-size: 16; -fx-background-radius: 2em;" stylesheets="@../../../../../Desktop/Library%20-%20副本/src/application/application.css" text="待定">
+            <Button fx:id="genChartButton" layoutX="869.0" layoutY="30.0" mnemonicParsing="false" onAction="#genChartButtonClicked" prefHeight="27.0" prefWidth="129.0" style="-fx-font-size: 16; -fx-background-radius: 2em;" stylesheets="@../../../../../Desktop/Library%20-%20副本/src/application/application.css" text="生成图表">
                <font>
                   <Font size="20.0" />
                </font>
             </Button>
-            <Button layoutX="1016.0" layoutY="95.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="129.0" style="-fx-font-size: 16; -fx-background-radius: 2em;" stylesheets="@../../../../../Desktop/Library%20-%20副本/src/application/application.css" text="待定">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Button>
-            <Button fx:id="dorpOut" layoutX="1016.0" layoutY="28.0" mnemonicParsing="false"  prefHeight="27.0" prefWidth="129.0" style="-fx-font-size: 16; -fx-background-radius: 2em;" stylesheets="@../../../../../Desktop/Library%20-%20副本/src/application/application.css" text="退出界面">
+            <Button fx:id="dropOut" layoutX="1016.0" layoutY="28.0" mnemonicParsing="false" onAction="#exitButtonClicked" prefHeight="27.0" prefWidth="129.0" style="-fx-font-size: 16; -fx-background-radius: 2em;" stylesheets="@application.css" text="退出界面">
                <font>
                   <Font size="20.0" />
                </font>
             </Button>
             <TableView fx:id="userTableView" layoutX="3.0" layoutY="215.0" prefHeight="493.0" prefWidth="1146.0" style="-fx-background-color: #515d6d; -fx-background-radius: 2em;" visible="false">
                <columns>
-                  <TableColumn prefWidth="75.0" text="用户编号" />
-                  <TableColumn prefWidth="75.0" text="用户名称" />
+                  <TableColumn prefWidth="77.0" text="用户编号" />
+                  <TableColumn prefWidth="101.0" text="用户名" />
+                  <TableColumn prefWidth="106.0" text="用户密码" />
+                  <TableColumn prefWidth="114.0" text="入学日期" />
+                  <TableColumn prefWidth="110.0" text="专业" />
+                  <TableColumn prefWidth="78.0" text="性别" />
+                  <TableColumn prefWidth="78.0" text="年龄" />
+                  <TableColumn prefWidth="174.0" text="手机号码" />
+                  <TableColumn prefWidth="186.0" text="邮箱" />
+                  <TableColumn prefWidth="121.0" text="已借阅书籍数量" />
                </columns>
             </TableView>
             <TableView fx:id="borrowTableView" layoutX="2.0" layoutY="214.0" prefHeight="493.0" prefWidth="1146.0" style="-fx-background-color: #515d6d; -fx-background-radius: 2em;" visible="false">
                <columns>
-                  <TableColumn prefWidth="75.0" text="借阅信息表" />
-                  <TableColumn prefWidth="75.0" text="C2" />
+                  <TableColumn prefWidth="180.0" text="书籍编号" />
+                  <TableColumn prefWidth="335.0" text="用户编号" />
+                  <TableColumn prefWidth="316.0" text="借阅时间" />
+                  <TableColumn prefWidth="314.0" text="归还时间" />
                </columns>
             </TableView>
+            <Button fx:id="deletUserButton1" layoutX="1016.0" layoutY="95.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="129.0" style="-fx-font-size: 16; -fx-background-radius: 2em;" stylesheets="@../../../../../Desktop/Library%20-%20副本/src/application/application.css" text="待定">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <TextField fx:id="txtShowPath" editable="false" layoutX="277.0" layoutY="182.0" prefHeight="28.0" prefWidth="144.0" style="-fx-background-color: #515d6d;" />
          </children>
       </AnchorPane>
       <AnchorPane prefHeight="707.0" prefWidth="234.0" style="-fx-background-color: #3d4956; -fx-background-radius: 2em;">

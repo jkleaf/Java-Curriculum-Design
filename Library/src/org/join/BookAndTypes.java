@@ -49,6 +49,9 @@ public class BookAndTypes {
 	        }
 	        return result.toString();
 	    }
+	public String getFilepath() {
+		return filepath;
+	}
 	public void setP_date(Date p_date) {
 		this.p_date = p_date;
 	}
@@ -76,7 +79,11 @@ public class BookAndTypes {
 	public void setType(Integer type) {
 		this.type = type;
 	}
-	public void setContent(String filepath) {
+//	public void setContent(String filepath) {
+//		this.filepath=filepath;
+//	}
+	public void setFilepath(String filepath) {
 		this.filepath=filepath;
 	}
+
 }
