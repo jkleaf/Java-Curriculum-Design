@@ -1,4 +1,4 @@
-package org.core;
+package org.jdbccore;
 
 import java.lang.reflect.Field;
 import java.sql.Connection;
@@ -10,10 +10,11 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bean.ColumnInfo;
-import org.bean.TableInfo;
-import org.join.BookAndTypes;
+import org.jdbcbean.ColumnInfo;
+import org.jdbcbean.TableInfo;
+import org.jdbcjoin.BookAndTypes;
 import org.po.Book;
+import org.tools.DialogDisplay;
 import org.tools.ReflectUtils;
 
 import application1.MainPanel;
@@ -66,6 +67,7 @@ public class MySQLQuery implements Query{
 			System.err.println("主键值为空或主键值已重复!");
 //			DialogDisplay.errorDialog("错误", "主键值为空或主键值已重复!");
 //			MainPanel.textId.clear();//
+			return -1;
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}finally {

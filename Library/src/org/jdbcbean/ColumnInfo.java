@@ -1,4 +1,4 @@
-package org.bean;
+package org.jdbcbean;
 
 public class ColumnInfo {
 	

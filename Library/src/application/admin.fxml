@@ -13,42 +13,42 @@
          <children>
             <TableView fx:id="bookTableView" layoutX="2.0" layoutY="214.0" prefHeight="493.0" prefWidth="1146.0" style="-fx-background-color: #515d6d; -fx-background-radius: 2em;">
               <columns>
-                <TableColumn prefWidth="94.0" text="书籍编号" />
-                <TableColumn prefWidth="137.0" text="书籍名称" />
-                  <TableColumn prefWidth="163.0" text="出版社" />
-                  <TableColumn prefWidth="151.0" text="出版日期" />
-                  <TableColumn prefWidth="111.0" text="书籍类型编号" />
-                  <TableColumn prefWidth="221.0" text="书籍类型" />
-                  <TableColumn prefWidth="268.0" text="书籍简介" />
+                <TableColumn fx:id="bat_id" prefWidth="94.0" text="书籍编号" />
+                <TableColumn fx:id="bat_name" prefWidth="137.0" text="书籍名称" />
+                  <TableColumn fx:id="bat_pub" prefWidth="163.0" text="出版社" />
+                  <TableColumn fx:id="bat_p_date" prefWidth="151.0" text="出版日期" />
+                  <TableColumn fx:id="bat_type" prefWidth="111.0" text="书籍类型编号" />
+                  <TableColumn fx:id="bat_type_name" prefWidth="221.0" text="书籍类型" />
+                  <TableColumn fx:id="bat_content" prefWidth="268.0" text="书籍简介" />
               </columns>
             </TableView>
-            <TextField fx:id="searchTexFiled" layoutX="570.0" layoutY="169.0" prefHeight="28.0" prefWidth="402.0" promptText="请输入您要查找的书籍编号或名称" style="-fx-background-color: #515d6d;" />
-            <Button fx:id="searchButton" layoutX="998.0" layoutY="162.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="138.0" style="-fx-background-radius: 5em; -fx-background-color: #515d6d; -fx-font-size: 16;" stylesheets="@../../../../../Desktop/Library%20-%20副本/src/application/application.css" text="   搜索" textFill="#fcfcfc" />
+            <TextField fx:id="searchTexFiled" layoutX="570.0" layoutY="169.0" prefHeight="28.0" prefWidth="402.0" promptText="请输入您要查找的数据" style="-fx-background-color: #515d6d;" />
+            <Button fx:id="searchButton" layoutX="998.0" layoutY="162.0" mnemonicParsing="false" onAction="#searchButtonClicked" prefHeight="41.0" prefWidth="138.0" style="-fx-background-radius: 5em; -fx-background-color: #515d6d; -fx-font-size: 16;" stylesheets="@../../../../../Desktop/Library%20-%20副本/src/application/application.css" text="   搜索" textFill="#fcfcfc" />
             <ImageView fitHeight="28.0" fitWidth="29.0" layoutX="1016.0" layoutY="169.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@imags/放大镜3.png" />
                </image>
             </ImageView>
-            <ChoiceBox fx:id="tableViewChoiceBox" layoutX="456.0" layoutY="169.0" onMouseClicked="#choiceboxini" prefHeight="28.0" prefWidth="100.0" />
-            <TextField fx:id="bookPress" editable="false" layoutX="384.0" layoutY="92.0" prefHeight="28.0" prefWidth="144.0" style="-fx-background-color: #515d6d;" />
+            <ChoiceBox fx:id="tableViewChoiceBox" layoutX="456.0" layoutY="169.0" prefHeight="28.0" prefWidth="100.0" />
+            <TextField fx:id="bookPress" layoutX="384.0" layoutY="92.0" prefHeight="28.0" prefWidth="144.0" style="-fx-background-color: #515d6d;" />
             <Text fill="WHITE" layoutX="287.0" layoutY="111.0" strokeType="OUTSIDE" strokeWidth="0.0" text="出版社：">
                <font>
                   <Font size="16.0" />
                </font>
             </Text>
-            <TextField fx:id="bookID" editable="false" layoutX="109.0" layoutY="34.0" prefHeight="28.0" prefWidth="144.0" style="-fx-background-color: #515d6d;" />
+            <TextField fx:id="bookID" layoutX="109.0" layoutY="34.0" prefHeight="28.0" prefWidth="144.0" style="-fx-background-color: #515d6d;" />
             <Text fill="WHITE" layoutX="29.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="书籍编号：">
                <font>
                   <Font size="16.0" />
                </font>
             </Text>
-            <TextField fx:id="bookName" editable="false" layoutX="109.0" layoutY="92.0" prefHeight="28.0" prefWidth="144.0" style="-fx-background-color: #515d6d;" />
+            <TextField fx:id="bookName" layoutX="109.0" layoutY="92.0" prefHeight="28.0" prefWidth="144.0" style="-fx-background-color: #515d6d;" />
             <Text fill="WHITE" layoutX="29.0" layoutY="112.0" strokeType="OUTSIDE" strokeWidth="0.0" text="书籍名称：">
                <font>
                   <Font size="16.0" />
                </font>
             </Text>
-            <TextField fx:id="bookType" editable="false" layoutX="384.0" layoutY="34.0" prefHeight="28.0" prefWidth="144.0" style="-fx-background-color: #515d6d;" />
+            <TextField fx:id="bookType" layoutX="384.0" layoutY="34.0" prefHeight="28.0" prefWidth="144.0" style="-fx-background-color: #515d6d;" />
             <Text fill="WHITE" layoutX="287.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="书籍分类：">
                <font>
                   <Font size="16.0" />
@@ -102,27 +102,27 @@
             </Button>
             <TableView fx:id="userTableView" layoutX="3.0" layoutY="215.0" prefHeight="493.0" prefWidth="1146.0" style="-fx-background-color: #515d6d; -fx-background-radius: 2em;" visible="false">
                <columns>
-                  <TableColumn prefWidth="77.0" text="用户编号" />
-                  <TableColumn prefWidth="101.0" text="用户名" />
-                  <TableColumn prefWidth="106.0" text="用户密码" />
-                  <TableColumn prefWidth="114.0" text="入学日期" />
-                  <TableColumn prefWidth="110.0" text="专业" />
-                  <TableColumn prefWidth="78.0" text="性别" />
-                  <TableColumn prefWidth="78.0" text="年龄" />
-                  <TableColumn prefWidth="174.0" text="手机号码" />
-                  <TableColumn prefWidth="186.0" text="邮箱" />
-                  <TableColumn prefWidth="121.0" text="已借阅书籍数量" />
+                  <TableColumn fx:id="u_id" prefWidth="77.0" text="用户编号" />
+                  <TableColumn fx:id="u_name" prefWidth="101.0" text="用户名" />
+                  <TableColumn fx:id="r_psw" prefWidth="106.0" text="用户密码" />
+                  <TableColumn fx:id="u_creaeteday" prefWidth="114.0" text="入学日期" />
+                  <TableColumn fx:id="u_major" prefWidth="110.0" text="专业" />
+                  <TableColumn fx:id="u_sex" prefWidth="78.0" text="性别" />
+                  <TableColumn fx:id="u_age" prefWidth="78.0" text="年龄" />
+                  <TableColumn fx:id="u_tel" prefWidth="174.0" text="手机号码" />
+                  <TableColumn fx:id="u_email" prefWidth="186.0" text="邮箱" />
+                  <TableColumn fx:id="u_hasb" prefWidth="121.0" text="已借阅书籍数量" />
                </columns>
             </TableView>
             <TableView fx:id="borrowTableView" layoutX="2.0" layoutY="214.0" prefHeight="493.0" prefWidth="1146.0" style="-fx-background-color: #515d6d; -fx-background-radius: 2em;" visible="false">
                <columns>
-                  <TableColumn prefWidth="180.0" text="书籍编号" />
-                  <TableColumn prefWidth="335.0" text="用户编号" />
-                  <TableColumn prefWidth="316.0" text="借阅时间" />
-                  <TableColumn prefWidth="314.0" text="归还时间" />
+                  <TableColumn fx:id="bot_id" prefWidth="180.0" text="书籍编号" />
+                  <TableColumn fx:id="botu_id" prefWidth="335.0" text="用户编号" />
+                  <TableColumn fx:id="borrow_date" prefWidth="316.0" text="借阅时间" />
+                  <TableColumn fx:id="return_date" prefWidth="314.0" text="归还时间" />
                </columns>
             </TableView>
-            <Button fx:id="deletUserButton1" layoutX="1016.0" layoutY="95.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="129.0" style="-fx-font-size: 16; -fx-background-radius: 2em;" stylesheets="@../../../../../Desktop/Library%20-%20副本/src/application/application.css" text="待定">
+            <Button fx:id="clearButton" layoutX="1016.0" layoutY="95.0" mnemonicParsing="false" onAction="#clearButtonClicked" prefHeight="27.0" prefWidth="129.0" style="-fx-font-size: 16; -fx-background-radius: 2em;" stylesheets="@../../../../../Desktop/Library%20-%20副本/src/application/application.css" text="清空表格">
                <font>
                   <Font size="20.0" />
                </font>

@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import org.core.MySQLQuery;
+import org.jdbccore.MySQLQuery;
 import org.po.Book;
 import org.tools.DialogDisplay;
 

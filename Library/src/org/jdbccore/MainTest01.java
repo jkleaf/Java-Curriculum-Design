@@ -1,4 +1,4 @@
-package org.core;
+package org.jdbccore;
 
 import java.io.IOException;
 

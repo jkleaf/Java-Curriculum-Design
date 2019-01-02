@@ -1,4 +1,4 @@
-package org.bean;
+package org.jdbcbean;
 
 import java.util.List;
 import java.util.Map;

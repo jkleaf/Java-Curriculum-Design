@@ -2,7 +2,7 @@ package application;
 
 import java.util.List;
 
-import org.core.MySQLQuery;
+import org.jdbccore.MySQLQuery;
 import org.po.Admin;
 import org.po.Register;
 

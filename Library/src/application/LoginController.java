@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import org.core.MySQLQuery;
+import org.jdbccore.MySQLQuery;
 import org.tools.DialogDisplay;
 
 import javafx.application.Application;

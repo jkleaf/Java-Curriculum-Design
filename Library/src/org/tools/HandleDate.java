@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import org.core.MySQLQuery;
+import org.jdbccore.MySQLQuery;
 
 public class HandleDate {
 	

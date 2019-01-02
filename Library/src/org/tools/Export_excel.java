@@ -3,8 +3,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import org.join.BookAndTypes;
-import org.join.Borrow_Users_Book;
+import org.jdbcjoin.BookAndTypes;
+import org.jdbcjoin.Borrow_Users_Book;
 import org.po.Book;
 import org.po.Borrow_table;
 import org.po.Register;

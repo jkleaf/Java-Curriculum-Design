@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import org.core.MySQLQuery;
+import org.jdbccore.MySQLQuery;
 import org.po.Register;
 
 import javafx.application.Application;

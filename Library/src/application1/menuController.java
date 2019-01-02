@@ -5,7 +5,7 @@ import java.sql.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import org.core.MySQLQuery;
+import org.jdbccore.MySQLQuery;
 import org.po.Book;
 
 import javafx.collections.FXCollections;

@@ -7,8 +7,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import org.core.MySQLQuery;
-import org.join.BookAndTypes;
+import org.jdbccore.MySQLQuery;
+import org.jdbcjoin.BookAndTypes;
 import org.po.Book;
 import org.po.Borrow_table;
 import org.po.Register;
@@ -17,6 +17,7 @@ import org.tools.Export_excel;
 import org.tools.Greeting;
 import org.tools.HandleDate;
 
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -132,6 +133,7 @@ public class menuController implements Initializable{
 	private int selectedIndex;
 	private String searchSql[];
 	public static String adminID;
+	private boolean flag=true;
 //	private boolean isReturn,isBorrow;
 	
 	@FXML
@@ -181,6 +183,11 @@ public class menuController implements Initializable{
 			four_four.setVisible(true);
 		}
 		if(event.getSource()==fifthButton) {
+			Platform.runLater(new Runnable() {
+				public void run(){
+				Music.getInstance().stop();
+			       }
+			});
 			System.exit(0);
 		}
 	}
@@ -255,7 +262,7 @@ public class menuController implements Initializable{
 	}
 	
 	public void searchButtonClicked(ActionEvent event){
-		if(txtSearch!=null&&txtSearch.getText().equals("")){
+		if(txtSearch==null||txtSearch.getText().equals("")){
 			return;
 		}	
 		listBean=getListBean(searchSql[selectedIndex],
@@ -310,9 +317,39 @@ public class menuController implements Initializable{
 		txtBorPsw.setText("");
 	}
 	
-	public void playMusic(MouseEvent event){
-		System.out.println("Music~~~");
+	
+
+	public void musicplay(MouseEvent event) throws Throwable   {
+		
+		Platform.runLater(new Runnable() {
+		       public void run() {             
+		    		if(event.getTarget()==musicImg) {
+		    			if(flag) {
+		    				try {
+								Music.getInstance().play();
+								music2.setVisible(true);
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+		    				flag=false;
+		    				
+		    		}
+		    			else {
+		    				flag=true;
+		    				try {
+								Music.getInstance().stop();
+								music2.setVisible(false);
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+		    			}}
+		       }
+		});
+			
 	}
+
 	
 	public void adLoginButtonClicked(ActionEvent event) throws IOException{
 		if(LoginModel.adminIslogin(adId.getText(), adPsw.getText())){

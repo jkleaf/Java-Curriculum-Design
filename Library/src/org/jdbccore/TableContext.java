@@ -1,4 +1,4 @@
-package org.core;
+package org.jdbccore;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.bean.ColumnInfo;
-import org.bean.TableInfo;
+import org.jdbcbean.ColumnInfo;
+import org.jdbcbean.TableInfo;
 import org.tools.StringUtils;
 
 public class TableContext {

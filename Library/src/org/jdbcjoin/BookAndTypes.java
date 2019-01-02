@@ -1,4 +1,4 @@
-package org.join;
+package org.jdbcjoin;
 
 import java.io.BufferedReader;
 import java.io.File;

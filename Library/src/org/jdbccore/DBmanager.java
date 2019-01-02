@@ -1,11 +1,11 @@
-package org.core;
+package org.jdbccore;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Properties;
 
-import org.bean.Configuration;
+import org.jdbcbean.Configuration;
 
 public class DBmanager {
 	private static Configuration conf=null;
