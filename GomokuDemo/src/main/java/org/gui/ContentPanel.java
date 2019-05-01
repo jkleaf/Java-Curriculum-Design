@@ -141,10 +141,10 @@ public class ContentPanel extends JPanel {
 //		panel3_1.add(panel3_1_1);
 //		panel3_1_1.setLayout(new BorderLayout(0, 0));
 //		
-////		JComboBox<String> comboBox = new JComboBox();
-////		comboBox.addItem(items[0]);
-////		comboBox.addItem(items[1]);
-////		panel3_1_1.add(comboBox, BorderLayout.NORTH);
+//		JComboBox<String> comboBox = new JComboBox();
+//		comboBox.addItem(items[0]);
+//		comboBox.addItem(items[1]);
+//		panel3_1_1.add(comboBox, BorderLayout.NORTH);
 //		panel3_1.add(Box.createVerticalStrut(100));
 //		JPanel panel3_1_2=new JPanel();
 //		panel3_1_2.setPreferredSize(new Dimension(150, 200));
